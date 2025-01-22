@@ -1,0 +1,43 @@
+@import "_settings";
+
+.wrapper {
+    margin: auto;
+    width: 90%;
+    height: 80%;
+    
+    color: $font-color;
+    box-shadow: 0 0 3px $neon;
+
+    background: rgba(0, 76, 72, 0.78);
+    border-radius: 5px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.4px);
+    -webkit-backdrop-filter: blur(4.4px);
+
+    position: absolute;
+    @include goToCenter;
+
+    overflow: hidden;
+    .title {
+        width: 100%;
+        height: 40px;
+        background-color: $backgroundColor;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 10px;
+
+        font-size: 15px;
+    }
+    .decoButton {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        border: none;
+
+        background-color: tomato;
+        color: $font-color;
+    }
+}

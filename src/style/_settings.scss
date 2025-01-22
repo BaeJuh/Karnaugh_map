@@ -1,0 +1,13 @@
+$out-backgroundColor: #353535;
+$backgroundColor: #003d3a;
+$neon: #FFDB00;
+$font-color: #FFFFFF;
+$vintage-font:  "Pirata One", serif;
+$noto-sans: "Noto Sans KR", serif;
+
+
+@mixin goToCenter {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

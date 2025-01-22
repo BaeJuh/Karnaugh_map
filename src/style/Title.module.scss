@@ -1,0 +1,21 @@
+@import "_settings";
+
+.title {
+    color: $font-color;
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(10deg);
+
+    width: 100%;
+
+    font: {
+        family: $vintage-font;
+        size: 140px;
+        weight: 900;
+    }
+    letter-spacing: 5px;
+
+    text-align: center;
+}

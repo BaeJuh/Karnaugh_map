@@ -1,0 +1,19 @@
+@import "_settings";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: $noto-sans;
+}
+
+html, body {
+    overflow: hidden;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+
+    background-color: $out-backgroundColor;
+}
