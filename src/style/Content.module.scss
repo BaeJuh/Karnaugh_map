@@ -1,0 +1,63 @@
+@import "_settings";
+
+.contentArea {
+    width: 100%;
+    height: calc(100% - 40px);
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.inputArea {
+    position: relative;
+    top: 0;
+    left: 0;
+    input {
+        $height: 33px;
+        width: 200px;
+        height: $height;
+
+        padding: 0 10px;
+
+        color: white;
+        background-color: $backgroundColor;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+
+        font-size: 20px;
+        line-height: $height;
+    }
+    .explanation {
+        text-align: right;
+    }
+}
+
+
+.cellArea {
+    width: 320px;
+    position: relative;
+
+    .cell {
+        display: inline-block;
+        width: 70px;
+        height: 70px;
+        margin: 5px;
+
+        border-radius: 3px;
+
+        background-color: $backgroundColor;
+        box-shadow: 0 0 3px $neon;
+
+        cursor: pointer;
+    }
+    .cell:hover {
+        background-color: $neon;
+    }
+}
+
+.formulaArea {
+
+}

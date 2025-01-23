@@ -1,3 +1,4 @@
+import Content from "./Content";
 import styles from "../style/Main.module.scss";
 
 const Main = () => {
@@ -10,9 +11,7 @@ const Main = () => {
                     X
                 </button>
             </div>
-            <div>
-                content...
-            </div>
+            <Content></Content>
         </div>
     );
 }
