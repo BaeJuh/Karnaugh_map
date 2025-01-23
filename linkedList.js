@@ -10,7 +10,7 @@ class KarnaughMap {
     }
 
     appendNode(node) {
-        if ( this.startNode === null && this.endNode === null ) {
+        if (this.startNode === null && this.endNode === null) {
             node.right = null;
             node.under = null;
             this.startNode = node;
@@ -21,7 +21,7 @@ class KarnaughMap {
     }
 
     createMap() {
-        for (let i=0; i<this.row; i++) {
+        for (let i = 0; i < this.row; i++) {
 
         }
     }
@@ -43,56 +43,35 @@ class StatusNode {
     
 */
 
-const result = [];
-const boolShuffler = (oneEvent = []) => {
-    const boolType = [ 0, 1 ];
-    if ( oneEvent.length === 3 ) {
-        result.push(oneEvent);
-        return ;
-    } else {
-        boolType.forEach((bool) => {
-            const eventStorage = [...oneEvent, bool];
-            boolShuffler( eventStorage );
-        });
+const shuffle = () => {
+    const result = [];
+    const boolShuffler = (oneEvent = []) => {
+        const boolType = [0, 1];
+        if (oneEvent.length === 3) {
+            result.push(oneEvent);
+            return ;
+        } else {
+            boolType.forEach((bool) => {
+                const eventStorage = [...oneEvent, bool];
+                boolShuffler(eventStorage);
+            });
+        }
     }
+    boolShuffler();
+    return result;
 }
-boolShuffler();
-console.log(result);
 
-// const newSort = ( inputArr = []) => {
-//     const result = [...inputArr];
-//     let t = 2;
-//     for (let i=0; i<result.length; i++) {
-//         let diffCount = 0;
-//         for (let j=0; j<result[i].length; j++) {
-//             if (result[i][j] !== result[i+1][j]) {
-//                 diffCount ++;
-//             }
-//         }
-//         if (diffCount > 1) {
-//             [result[i+1], result[i+t]] = [result[i+t], result[i+1]];
-//             t++;
-//             i--;
-//         } else {
-//             t = 2;
-//         }
-//         console.log(result);
-//     }
 
-//     return result;
+// const r = shuffle();
+
+// const gray = (binary) => {
+//     return binary ^ (binary >> 1);
 // }
+// const g = r.sort((a, b) => {
+//     const x = gray(parseInt(a.join(""), 2));
+//     const y = gray(parseInt(b.join(""), 2));
+//     return x - y;
+// });
 
-// console.log(newSort(result));
+// console.log(g);
 
-// const [row, col] = [4, 8];
-// for (let i=0; i<row; i++) {
-//     let temp1 = "";
-//     for (let j=0; j<col/2; j++) {
-//         temp1 = temp1 + `${i}${j}, `;
-//     }
-//     let temp2 = "";
-//     for (let j=col/2; j<col; j++) {
-//         temp2 = `${i}${j}, ` + temp2;
-//     }
-//     console.log(temp1 + temp2);
-// }

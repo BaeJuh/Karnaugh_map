@@ -35,16 +35,43 @@
     }
 }
 
-
 .cellArea {
-    width: 320px;
-    position: relative;
+    $cellSize: 70px;
+    $tagSize: 30px;
+    @mixin setting {
+        display: inline-block;
+        text-align: center;
+        margin: 5px;
+        line-height: $cellSize;
+    }
+    display: block;
+
+    .variable {
+        @include setting;
+        width: $tagSize;
+        height: $tagSize;
+
+        line-height: $tagSize;
+    }
+    .colTag {
+        @include setting;
+        width: $cellSize;
+        height:$tagSize;
+
+        line-height: $tagSize;
+    }
+    .rowTag {
+        @include setting;
+        width: $tagSize;
+        height: $cellSize;
+    }
 
     .cell {
-        display: inline-block;
-        width: 70px;
-        height: 70px;
-        margin: 5px;
+        @include setting;
+        width: $cellSize;
+        height: $cellSize;
+        // display: inline-block;
+        // margin: 5px;
 
         border-radius: 3px;
 
