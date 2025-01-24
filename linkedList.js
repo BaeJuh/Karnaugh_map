@@ -43,11 +43,11 @@ class StatusNode {
     
 */
 
-const shuffle = () => {
+const shuffle = (len) => {
     const result = [];
     const boolShuffler = (oneEvent = []) => {
         const boolType = [0, 1];
-        if (oneEvent.length === 3) {
+        if (oneEvent.length === len) {
             result.push(oneEvent);
             return ;
         } else {
@@ -75,3 +75,26 @@ const shuffle = () => {
 
 // console.log(g);
 
+const grayCode = (codeLength) => {
+    const rightShift = (arr) => {
+        arr.pop();
+        arr.unshift(0);
+
+        return arr;
+    }
+    const result = [];
+    const originCode = shuffle(codeLength);
+    
+    for (let i = 0; i < (2 ** codeLength); i++) {
+        const newCode = [];
+        const shiftedCode = rightShift([...originCode[i]]);
+
+        for (let j = 0; j < codeLength; j++) {
+            newCode.push(originCode[i][j] === shiftedCode[j] ? 0 : 1);
+        }
+        result.push(newCode);
+    }
+
+    return result;
+}
+console.log(grayCode(1));
