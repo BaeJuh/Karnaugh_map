@@ -62,13 +62,63 @@ class KarnaughMap extends TwoWayLinkedList {
 
     setResultBundles() {
         if (this._startNode) {
-            
-            
+            let visitedPlace = [];
+
+            let rowStartNode = this._startNode;
+            while (rowStartNode) {
+                let currentNode = rowStartNode;
+                while (currentNode) {
+                    if (currentNode.status && !visitedPlace.includes(currentNode.value)) {
+                        const [connectedNode, copyVisitedPlace] = this.checkConnectedNode(currentNode, visitedPlace);
+                        
+                        if (this.sizeCheck(connectedNode)) {
+                            this.resultBundles.push(connectedNode);
+                            visitedPlace = [...visitedPlace, ...copyVisitedPlace];
+                        }
+                    }
+                    currentNode = currentNode.right;
+                }
+                rowStartNode = rowStartNode.under;
+            }
+
+            console.log(this.resultBundles);
         }
     }
 
-    checkConnectedNode(node) {
-        
+    checkConnectedNode(node, visitedPlace) {
+        let copyVisitedPlace = [...visitedPlace];
+        const connectedNode = [];
+        const lineUp = [node];
+
+        while (lineUp.length > 0) {
+            const currentNode = lineUp.pop();
+
+            if (currentNode.status && !copyVisitedPlace.includes(currentNode.value)) {
+                copyVisitedPlace.push(currentNode.value);
+                connectedNode.push(currentNode);
+
+                if (currentNode.right && currentNode.right.status) {
+                    lineUp.push(currentNode.right);
+                }
+                if (currentNode.under && currentNode.under.status) {
+                    lineUp.push(currentNode.under);
+                }
+            }
+        }
+
+        return [connectedNode, copyVisitedPlace];
+    }
+
+    sizeCheck(connectedNode) {
+        const connectedLength = connectedNode.reduce((acc) => {
+            return acc+1;
+        }, 0);
+
+        if ( (Math.log(connectedLength)/Math.log(2))%1 === 0 ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     printAllId() { // test하려 만든 노드
