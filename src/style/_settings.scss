@@ -1,9 +1,12 @@
 $out-backgroundColor: #353535;
 $backgroundColor: #003936;
-$neon: #FFDB00;
+// $neon: #FFDB00;
+$neon: #ff7247;
 $font-color: #FFFFFF;
 $vintage-font:  "Pirata One", serif;
 $noto-sans: "Noto Sans KR", serif;
+
+$T: #ff7247;
 
 
 @mixin goToCenter {

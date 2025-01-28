@@ -2,23 +2,24 @@ import { useEffect, useState } from "react";
 import styles from "../style/Content.module.scss";
 
 import { grayCode, getVariables } from "../modules/moduleOfContent.mjs";
-import { Cell } from "../modules/linkedList.mjs";
+import { Cell, KarnaughMap, karnaughMap } from "../modules/linkedList.mjs";
 
 const Content = () => {
     const cellSize = 80;
     const tagSize = 50;
-    const [inputText, setInputText] = useState("A, B, C");
-    const [variables, setVariables] = useState(getVariables(inputText));
-    const [[variableTag, rowTag, colTag], setRowColTag] = useState([]);
-    const [cells, setCells] = useState([]);
-    const [[row, col], setRowCol] = useState([0, 0]);
+    const [inputText, setInputText] = useState("A, B, C"); // string // for { onChange={e => setInputText(e.target.value)} }
+    const [variables, setVariables] = useState(getVariables(inputText)); // list ["A", "B", "C"]
+    const [[variableTag, rowTag, colTag], setRowColTag] = useState([]); // JSX
+    const [cells, setCells] = useState(null); // instance of Cell
+    const [cellBox, setCellBox] = useState(null); // JSX
+    const [[row, col], setRowCol] = useState([0, 0]); // for dynamic display
 
     useEffect(() => {
         setVariables(getVariables(inputText));
     }, [inputText]);
 
     useEffect(() => {
-        setCells(null);
+        // setCells(null);
         if (variables.length !== 0) {
             const variableCount = variables.length;
             const cellCount = 2 ** variableCount;
@@ -49,10 +50,7 @@ const Content = () => {
                 return <div key={`colTag_${i}`} className={styles.colTag}>{colCase.join(" ")}</div>;
             });
 
-            // const initCellStatus = []; // 클릭된 상태인지 아닌지
             const cellList = rowTruthTable.map((rowCase, row_i) => {
-                // initCellStatus.push([]);
-
                 return colTruthTable.map((colCase, col_i) => {
                     // initCellStatus[row_i].push(false);
                     const identifier = `cell_${row_i}_${col_i}`;
@@ -71,31 +69,31 @@ const Content = () => {
                 });
             });
             setCells(cellList);
-            console.log(cellList);
-            // setCellStatus(cellStatus);
             setRowColTag([variableTag, rowTagList, colTagList]); // 순서 반드시 확인할 것 [[variableTag, rowTag, colTag], setRowColTag]
             setRowCol([row, col]);
         }
     }, [variables]);
 
-    // event Handler
-    // const [cellStatus, setCellStatus] = useState(null);
-    const [cellBox, setCellBox] = useState(null);
+
     useEffect(() => {
-        if (cells.length !== 0) {
-            setCellBox(cells.map((rowCell, row_i) => {
-                return rowCell.map((cell, col_i) => {
+        if (cells) {
+            setCellBox(cells.map((rowCell) => {
+                return rowCell.map((cell) => {
                     return (
-                            <div key={cell.id} className={styles.cell} style={{backgroundColor: cell.status ? "tomato" : ""}}
+                        <div key={cell.id} className={styles.cell} style={cell.status ? { backgroundColor: "#ff7247" } : null}
                             onClick={(e) => {
                                 cell.changeStatus();
                                 setCells([...cells]);
-                                // console.log(cells)
                             }}>
-                                {`${cell.value.join(" ")}`}
-                            </div>);
+                            {`${cell.value.join(" ")}`}
+                        </div>);
                 });
             }));
+
+            const karnaughMap = new KarnaughMap("karnaughMap");
+            karnaughMap.nodeSetting(cells);
+            karnaughMap.printAllId();
+            // karnaughMap.setResultBundles();
         }
     }, [cells]);
 

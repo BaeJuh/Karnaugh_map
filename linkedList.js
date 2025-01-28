@@ -43,13 +43,89 @@ class TwoWayLinkedList {
 
         return null;
     }
+
+    nodeSetting(node = []) {
+        node.forEach((rowNode, row_i) => {
+            let prevNode = null;
+            rowNode.forEach((currentNode, col_i) => {
+                if (this.startNode === null) {
+                    this.startNode = currentNode;
+                    // currentRowStart = currentNode;
+                }
+
+                if (prevNode) { // cell 행 연결
+                    this.connectHorizontally(prevNode, currentNode);
+                }
+
+                if (row_i > 0) {
+                    // const temp = this.searchNode(`cell_${row_i - 1}_${col_i}`)
+                    // console.log(temp.id);
+                    this.connectVertically(this.searchNode(`cell_${row_i - 1}_${col_i}`), currentNode);
+                }
+
+                prevNode = currentNode;
+            });
+        });
+    }
+
+    setResultBundles() {
+        if (this._startNode) {
+            let rowStartNode = this._startNode;
+
+            while (rowStartNode) {
+                let currentNode = rowStartNode;
+                while (currentNode) {
+                    const connectedNode = [];
+                    if (currentNode.status) {
+                        connectedNode.push(this.checkConnectedNode(currentNode));
+                    }
+                    this.resultBundles.push(connectedNode);
+                    currentNode = currentNode.right;
+                }
+                rowStartNode = rowStartNode.under; // next row
+            }
+
+            console.log(this.resultBundles);
+        }
+    }
+
+    checkConnectedNode(node) {
+        if (node.right) {
+            this.checkConnectedNode(node.right);
+        }
+        if (node.under) {
+            this.checkConnectedNode(node.under);
+        }
+        return node.value;
+    }
+
+    printAllId() {
+        if (this._startNode) {
+            let rowStartNode = this._startNode;
+
+            while (rowStartNode) {
+                let currentNode = rowStartNode;
+                while (currentNode) {
+                    console.log(currentNode.id);
+                    currentNode = currentNode.right;
+                }
+                rowStartNode = rowStartNode.under; // next row
+            }
+
+            return null;
+        }
+
+        return null;
+    }
 }
+
+
 
 class Cell {
     constructor(id) {
         this._id = id;
-        this.status = false; // boolean
-        this._value = undefined;
+        this._status = false; // boolean
+        this._value = undefined; // clicked status
 
         this._right = null;
         this._under = null;
@@ -59,24 +135,37 @@ class Cell {
     get id() { return this._id; }
 
     set right(cell) { this._right = cell; }
+    get right() { return this._right }
     set under(cell) { this._under = cell; }
+    get under() { return this._under; }
 
     get value() { return this._value; }
     set value(data) { this._value = data; }
+
+    changeStatus() { this._status = !this._status; }
+    get status() { return this._status; }
 }
 
-const newMap = new TwoWayLinkedList("newMap");
-for (let row = 0; row < 2; row++) {
-    for (let col = 0; col < 4; col++) {
-        // 
-        const newCell = new Cell(`cell_${row}_${col}`);
-        newMap.value = `${row}${col}`;
-        if (newMap.startNode === null) {
-            newMap.startNode = newCell;
-        }
+const nodes = [
+    [new Cell("cell_0_0"), new Cell("cell_0_1"), new Cell("cell_0_2")],
+    [new Cell("cell_1_0"), new Cell("cell_1_1"), new Cell("cell_1_2")]
+];
 
+const list = new TwoWayLinkedList("example");
+list.nodeSetting(nodes);
+// list.printAllId();
+let current = list.startNode;
+while (current) {
+    let row = current;
+    let rowStr = '';
+    while (row) {
+        rowStr += row.id + ' ';
+        row = row._right;
     }
+    console.log(rowStr);
+    current = current._under;
 }
+
 
 /*
     Singly Linked List 원리로 카르노 맵 구성

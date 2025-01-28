@@ -1,14 +1,7 @@
 class TwoWayLinkedList {
     constructor(id) {
         this.id = id;
-
         this._startNode = null;
-        this._endNode = null; // 아마 필요 없을 수도?
-
-        this.resultBundles = []; // [][]
-
-        // this.row = 2;
-        // this.col = 4;
     }
 
     set startNode(node) { this._startNode = node; }
@@ -40,6 +33,59 @@ class TwoWayLinkedList {
 
             return null;
         }
+        return null;
+    }
+}
+
+class KarnaughMap extends TwoWayLinkedList {
+    constructor(id) {
+        super(id);
+        this.resultBundles = []; // [][]
+    }
+    nodeSetting(node = []) {
+        node.forEach((rowNode, row_i) => {
+            let prevNode = null;
+            rowNode.forEach((currentNode, col_i) => {
+                if (this.startNode === null) {
+                    this.startNode = currentNode;
+                }
+                if (prevNode) {
+                    this.connectHorizontally(prevNode, currentNode);
+                }
+                if (row_i > 0) {
+                    this.connectVertically(this.searchNode(`cell_${row_i - 1}_${col_i}`), currentNode);
+                }
+                prevNode = currentNode;
+            });
+        });
+    }
+
+    setResultBundles() {
+        if (this._startNode) {
+            
+            
+        }
+    }
+
+    checkConnectedNode(node) {
+        
+    }
+
+    printAllId() { // test하려 만든 노드
+        if (this._startNode) {
+            let rowStartNode = this._startNode;
+
+            while (rowStartNode) {
+                let currentNode = rowStartNode;
+                while (currentNode) {
+                    console.log(currentNode.value);
+                    currentNode = currentNode.right;
+                }
+                rowStartNode = rowStartNode.under; // next row
+            }
+
+            return null;
+        }
 
         return null;
     }
@@ -59,7 +105,9 @@ class Cell {
     get id() { return this._id; }
 
     set right(cell) { this._right = cell; }
+    get right() { return this._right }
     set under(cell) { this._under = cell; }
+    get under() { return this._under; }
 
     get value() { return this._value; }
     set value(data) { this._value = data; }
@@ -68,4 +116,5 @@ class Cell {
     get status() { return this._status; }
 }
 
-export { Cell, TwoWayLinkedList };
+
+export { Cell, KarnaughMap };
