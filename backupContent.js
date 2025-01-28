@@ -2,15 +2,14 @@ import { useEffect, useState } from "react";
 import styles from "../style/Content.module.scss";
 
 import { grayCode, getVariables } from "../modules/moduleOfContent.mjs";
-import { Cell } from "../modules/linkedList.mjs";
 
 const Content = () => {
     const cellSize = 80;
     const tagSize = 50;
     const [inputText, setInputText] = useState("A, B, C");
-    const [variables, setVariables] = useState(getVariables(inputText));
+    const [variables, setVariables] = useState(getVariables(inputText) || []);
     const [[variableTag, rowTag, colTag], setRowColTag] = useState([]);
-    const [cells, setCells] = useState([]);
+    const [cells, setCells] = useState([] || null);
     const [[row, col], setRowCol] = useState([0, 0]);
 
     useEffect(() => {
@@ -29,9 +28,21 @@ const Content = () => {
 
             const [row, col] = [divisor, cellCount / divisor];
 
+            // const [rowVariable, colVariable] = [[], []];
+            // variables.forEach((variable, i) => {
+            //     if (variableCount === 1) {
+            //         rowVariable.push(variable);
+            //     } else {
+            //         const border = Math.floor(variableCount / 2);
+            //         console.log(border, divisor);
+            //         (i < border) && (rowVariable.push(variable));
+            //         (i < border) || (colVariable.push(variable));
+            //     }
+            // });
             const border = Math.floor(variableCount / 2);
             const [rowVariable, colVariable] = variableCount === 1 ? [variables, []] : [variables.slice(0, border), variables.slice(border)];
 
+            // const [rowTagList, colTagList] = [[], []];
             const variableTag = (
                 <div className={styles.variable}>
                     <div className={styles.colVariable}><p>{colVariable.join(" ")}</p></div>
@@ -49,57 +60,36 @@ const Content = () => {
                 return <div key={`colTag_${i}`} className={styles.colTag}>{colCase.join(" ")}</div>;
             });
 
-            // const initCellStatus = []; // 클릭된 상태인지 아닌지
             const cellList = rowTruthTable.map((rowCase, row_i) => {
-                // initCellStatus.push([]);
-
                 return colTruthTable.map((colCase, col_i) => {
-                    // initCellStatus[row_i].push(false);
                     const identifier = `cell_${row_i}_${col_i}`;
-                    const cell = new Cell(identifier);
-                    cell.value = [...rowCase, ...colCase];
-                    // return (
-                    //     <div key={identifier} className={styles.cell} onClick={(e) => {
-                    //         console.log(identifier);
-                    //         cell.changeStatus();
-                    //         console.log(initCellStatus[row_i][col_i]); 
-                    //         console.log(cell.status);
-                    //     }}>
-                    //         {`${rowCase.join(" ")} ${colCase.join(" ")}`}
-                    //     </div>);
-                    return cell;
+                    // new Cell ~~~~
+                    return (
+                        <div key={identifier} className={styles.cell} onClick={(e) => {}}>
+                            {`${rowCase.join(" ")} ${colCase.join(" ")}`}
+                        </div>);
                 });
             });
+            // rowTruthTable.forEach((rowCase, i) => {
+            //     rowTagList.push(<div key={`rowTag_${i}`} className={styles.rowTag}><span>{rowCase.join(" ")}</span></div>);
+            // });
+            // colTruthTable.forEach((colCase, i) => {
+            //     colTagList.push(<div key={`colTag_${i}`} className={styles.colTag}>{colCase.join(" ")}</div>);
+            // });
+
+            // const cellList = [];
+            // for (let i = 0; i < row; i++) {
+            //     cellList.push([]);
+            //     for (let j = 0; j < col; j++) {
+            //         cellList[i].push(<div key={`cell_${i}_${j}`} className={styles.cell}>{`${rowTruthTable[i].join(" ")} ${colTruthTable[j].join(" ")}`}</div>);
+            //     }
+            // }
             setCells(cellList);
-            console.log(cellList);
-            // setCellStatus(cellStatus);
             setRowColTag([variableTag, rowTagList, colTagList]); // 순서 반드시 확인할 것 [[variableTag, rowTag, colTag], setRowColTag]
             setRowCol([row, col]);
         }
+
     }, [variables]);
-
-    // event Handler
-    // const [cellStatus, setCellStatus] = useState(null);
-    const [cellBox, setCellBox] = useState(null);
-    useEffect(() => {
-        if (cells.length !== 0) {
-            setCellBox(cells.map((rowCell, row_i) => {
-                return rowCell.map((cell, col_i) => {
-                    return (
-                            <div key={cell.id} className={styles.cell} style={{backgroundColor: cell.status ? "tomato" : ""}}
-                            onClick={(e) => {
-                                cell.changeStatus();
-                                setCells([...cells]);
-                                // console.log(cells)
-                            }}>
-                                {`${cell.value.join(" ")}`}
-                            </div>);
-                });
-            }));
-        }
-    }, [cells]);
-
-
 
     return (
         <div className={styles.contentArea}>
@@ -112,8 +102,7 @@ const Content = () => {
                 <div className={styles.colTags}>{colTag}</div>
                 <div className={styles.rowTags} style={{ width: `${tagSize}px` }}>{rowTag}</div>
                 <div className={styles.cellTable} style={{ width: `${(col * cellSize)}px` }}>
-                    {/* {cells} */}
-                    {cellBox}
+                    {cells}
                 </div>
             </div>}
             <div className={styles.formulaArea}>
