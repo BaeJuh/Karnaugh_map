@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "../style/Content.module.scss";
 
+import { grayCode, getVariables } from "../modules/moduleOfContent.mjs";
+
 const Content = () => {
     const cellSize = 80;
     const tagSize = 50;
@@ -40,13 +42,13 @@ const Content = () => {
             });
 
             const [rowTruthTable, colTruthTable] = [
-                grayCodeSorter(rowVariable.length), grayCodeSorter(colVariable.length)
+                grayCode(rowVariable.length), grayCode(colVariable.length)
             ];
             // const [rowTagList, colTagList] = [[], []];
             const variableTag = (
                 <div className={styles.variable}>
-                    <div className={styles.colVariable}><p>{colVariable}</p></div>
-                    <div className={styles.rowVariable}><p>{rowVariable}</p></div>
+                    <div className={styles.colVariable}><p>{colVariable.join(" ")}</p></div>
+                    <div className={styles.rowVariable}><p>{rowVariable.join(" ")}</p></div>
                 </div>
             );
 
@@ -103,48 +105,6 @@ const Content = () => {
             </div>
         </div>
     );
-}
-
-const getVariables = (inputText) => {
-    return inputText.split(",")
-        .filter(variable => variable.trim())
-        .map(variable => variable.trim());
-}
-
-const boolShuffler = (stopLength = 0) => {
-    const result = [];
-    const shuffler = (stopLength, oneEvent = []) => {
-        const boolType = [0, 1];
-        if (oneEvent.length === stopLength) {
-            result.push(oneEvent);
-            return;
-        } else {
-            boolType.forEach((bool) => {
-                const eventStorage = [...oneEvent, bool];
-                shuffler(stopLength, eventStorage);
-            });
-        }
-    }
-    shuffler(stopLength);
-    return result;
-}
-
-const grayCodeSorter = (codeLength) => {
-    const rightShift = (arr) => {
-        arr.pop();
-        arr.unshift(0);
-
-        return arr;
-    }
-    const originCode = boolShuffler(codeLength);
-
-    return originCode.map((originCodeCase, i) => {
-        const shiftedCode = rightShift([...originCodeCase]);
-        
-        return originCodeCase.map((bool, j) => {
-            return (bool && !shiftedCode[j]) || (!bool && shiftedCode[j]) ? 1 : 0
-        });
-    });
 }
 
 export default Content;
