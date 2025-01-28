@@ -84,17 +84,27 @@ const grayCode = (codeLength) => {
     }
     const result = [];
     const originCode = shuffle(codeLength);
-    
+
     for (let i = 0; i < (2 ** codeLength); i++) {
         const newCode = [];
         const shiftedCode = rightShift([...originCode[i]]);
 
         for (let j = 0; j < codeLength; j++) {
-            newCode.push(originCode[i][j] === shiftedCode[j] ? 0 : 1);
+            // newCode.push(originCode[i][j] === shiftedCode[j] ? 0 : 1);
+            newCode.push((originCode[i][j] && !shiftedCode[j]) || (!originCode[i][j] && shiftedCode[j]) ? 1 : 0);
         }
         result.push(newCode);
     }
 
+    const test = originCode.map((originCodeCase, i) => {
+        const shiftedCode = rightShift([...originCodeCase]);
+        
+        return originCodeCase.map((bool, j) => {
+            return (bool && !shiftedCode[j]) || (!bool && shiftedCode[j]) ? 1 : 0
+        });
+    });
+
+    console.log(test);
     return result;
 }
-console.log(grayCode(1));
+console.log(grayCode(3));
