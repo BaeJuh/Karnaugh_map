@@ -7,17 +7,18 @@ class TwoWayLinkedList {
     set startNode(node) { this._startNode = node; }
     get startNode() { return this._startNode; }
 
-    connectHorizontally(leftNode, rightNode) { 
+    connectHorizontally(leftNode, rightNode) {
         leftNode.right = rightNode; // leftNode -> rightNode
         rightNode.left = leftNode; // rightNode -> leftNode
     }
 
-    connectVertically(overNode, underNode) { 
+    connectVertically(overNode, underNode) {
         overNode.under = underNode; // overNode -> underNode
         underNode.over = overNode; // underNode -> overNode
     }
 
     searchNode(nodeId) {
+        const visitedNode = new Set();
         if (this._startNode) {
             let rowNode = this._startNode;
 
@@ -28,7 +29,9 @@ class TwoWayLinkedList {
                     if (currentNode.id === nodeId) {
                         return currentNode;
                     }
+                    visitedNode.add(currentNode);
                     currentNode = currentNode.right;
+                    if (visitedNode.has(currentNode)) break;
                 }
                 rowNode = rowNode.under; // next row
             }
@@ -62,7 +65,7 @@ class Node {
 
     set right(node) { this._right = node; }
     get right() { return this._right }
-    
+
     get value() { return this._value; }
     set value(data) { this._value = data; }
 }
@@ -76,14 +79,22 @@ class KarnaughMap extends TwoWayLinkedList {
         nodes.forEach((rowNode, row_i) => {
             let prevNode = null;
             rowNode.forEach((currentNode, col_i) => {
-                if (this.startNode === null) {
+                if (this.startNode === null) { // 아무것도 없을 때 설정
                     this.startNode = currentNode;
                 }
-                if (prevNode) {
+                if (prevNode) { // 가로 연결
                     super.connectHorizontally(prevNode, currentNode);
+
+                    if ((rowNode.length - 1) === col_i && currentNode.right === null && super.searchNode(`cell_${row_i}_${0}`).left === null) { // 행의 마지막 노드 일때
+                        super.connectHorizontally(currentNode, super.searchNode(`cell_${row_i}_${0}`));
+                    }
                 }
-                if (row_i > 0) {
+                if (row_i > 0) { // 세로 연결
                     super.connectVertically(super.searchNode(`cell_${row_i - 1}_${col_i}`), currentNode);
+
+                    if ((nodes.length - 1) === row_i) { // 마지막 행의 노드 일때
+                        super.connectVertically(currentNode, super.searchNode(`cell_${0}_${col_i}`))
+                    }
                 }
                 prevNode = currentNode;
             });
@@ -91,48 +102,59 @@ class KarnaughMap extends TwoWayLinkedList {
     }
 
     setResultBundles() {
+        const visitedNode = new Set();
         if (this._startNode) {
+            let rowNode = this._startNode;
 
-            let rowStartNode = this._startNode;
-            while (rowStartNode) {
-                let currentNode = rowStartNode;
+            while (rowNode) {
+                let currentNode = rowNode;
+                if (visitedNode.has(currentNode)) break;
+
                 while (currentNode) {
                     if (currentNode.status) {
-                        const connectedNode= this.checkConnectedNode(currentNode);
+                        // const connectedNode = this.checkConnectedNode(currentNode);
+                        this.checkConnectedNode(currentNode);
 
-                        if (this.sizeCheck(connectedNode)) {
-                            this.resultBundles.push(connectedNode);
-                        }
+                        // if (this.sizeCheck(connectedNode)) {
+                        //     this.resultBundles.push(connectedNode);
+                        // }
                     }
+                    visitedNode.add(currentNode);
                     currentNode = currentNode.right;
+                    if (visitedNode.has(currentNode)) break;
                 }
-                rowStartNode = rowStartNode.under;
+                rowNode = rowNode.under; // next row
             }
-
-            console.log(this.resultBundles);
         }
     }
 
     checkConnectedNode(node) {
-        const connectedNode = [];
+        const connectedNode = new Set();
         const lineUp = [node];
 
         while (lineUp.length > 0) {
             const currentNode = lineUp.pop();
 
-            if (currentNode.status ) {
-                connectedNode.push(currentNode);
+            if (!connectedNode.has(currentNode)) {
+                connectedNode.add(currentNode);
 
-                if (currentNode.right && currentNode.right.status) {
-                    lineUp.push(currentNode.right);
+                if (currentNode.over?.status) {
+                    lineUp.push(currentNode.over);
                 }
-                if (currentNode.under && currentNode.under.status) {
+                if (currentNode.under?.status) {
                     lineUp.push(currentNode.under);
+                }
+                if (currentNode.left?.status) {
+                    lineUp.push(currentNode.left);
+                }
+                if (currentNode.right?.status) {
+                    lineUp.push(currentNode.right);
                 }
             }
         }
 
-        return connectedNode;
+
+        console.log(node.value, [...connectedNode]);
     }
 
     sizeCheck(connectedNode) {
@@ -147,27 +169,20 @@ class KarnaughMap extends TwoWayLinkedList {
 
     run(nodes) {
         this.nodeSetting(nodes);
-        // this.printAllId();
-        // this.setResultBundles();
+        // this.printAllId(nodes);
+        this.setResultBundles();
     }
 
-    printAllId() { // test하려 만든 노드
-        if (this._startNode) {
-            let rowStartNode = this._startNode;
-
-            while (rowStartNode) {
-                let currentNode = rowStartNode;
-                while (currentNode) {
-                    console.log(currentNode);
-                    currentNode = currentNode.right;
-                }
-                rowStartNode = rowStartNode.under; // next row
-            }
-
-            return null;
-        }
-
-        return null;
+    printAllId(nodes) { // test하려 만든 노드
+        let rowStartNode = this.startNode;
+        nodes.forEach((_, row_i) => {
+            let currentNode = rowStartNode;
+            _.forEach((__, col_i) => {
+                console.log(currentNode);
+                currentNode = currentNode.right;
+            });
+            rowStartNode = rowStartNode.under;
+        });
     }
 }
 
