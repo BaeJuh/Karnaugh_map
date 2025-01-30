@@ -91,9 +91,7 @@ const Content = () => {
             }));
 
             const karnaughMap = new KarnaughMap("karnaughMap");
-            karnaughMap.nodeSetting(cells);
-            // karnaughMap.printAllId();
-            karnaughMap.setResultBundles();
+            karnaughMap.run(cells);
         }
     }, [cells]);
 
