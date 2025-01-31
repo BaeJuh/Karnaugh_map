@@ -108,7 +108,6 @@ const Content = () => {
                 <div className={styles.colTags}>{colTag}</div>
                 <div className={styles.rowTags} style={{ width: `${tagSize}px` }}>{rowTag}</div>
                 <div className={styles.cellTable} style={{ width: `${(col * cellSize)}px` }}>
-                    {/* {cells} */}
                     {cellBox}
                 </div>
             </div>}
