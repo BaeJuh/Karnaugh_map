@@ -14,6 +14,8 @@ const Content = () => {
     const [cellBox, setCellBox] = useState(null); // JSX
     const [[row, col], setRowCol] = useState([0, 0]); // for dynamic display
 
+    const [truthTable, setTruthTable] = useState(null);
+
     useEffect(() => {
         setVariables(getVariables(inputText));
     }, [inputText]);
@@ -92,6 +94,22 @@ const Content = () => {
 
             const karnaughMap = new KarnaughMap("karnaughMap");
             karnaughMap.run(cells);
+
+            console.log(cells)
+            const truthTableJSX = cells.reduce((acc, row) => {
+                return [[...acc], [...row.map((cell) => {
+                    const logicFormula = cell.value.join(" ");
+                    const [result, resultColor] = cell.status ? ["T", "#04d9ff"] : ["F", "#ff7247"];
+                    return (
+                        <div key={cell.id} className={styles.truthTableRow}>
+                            <p>{logicFormula}</p>
+                            <p style={{color: resultColor}}>{result}</p>
+                        </div>
+
+                    );
+                })]];
+            }, []);
+            setTruthTable(truthTableJSX);
         }
     }, [cells]);
 
@@ -103,14 +121,21 @@ const Content = () => {
                 <input value={inputText} onChange={e => setInputText(e.target.value)}></input>
                 <p className={styles.explanation}>변수 이름 (쉼표로 구분)</p>
             </div>
-            {cells === null ? "변수를 입력해주세요." : <div className={styles.cellArea} style={{ width: `${(col * cellSize) + tagSize}px` }}>
-                {variableTag}
-                <div className={styles.colTags}>{colTag}</div>
-                <div className={styles.rowTags} style={{ width: `${tagSize}px` }}>{rowTag}</div>
-                <div className={styles.cellTable} style={{ width: `${(col * cellSize)}px` }}>
-                    {cellBox}
+            <div className={styles.tableArea}>
+                {cells === null ? "변수를 입력해주세요." : <div className={styles.cellArea} style={{ width: `${(col * cellSize) + tagSize}px` }}>
+                    {variableTag}
+                    <div className={styles.colTags}>{colTag}</div>
+                    <div className={styles.rowTags} style={{ width: `${tagSize}px` }}>{rowTag}</div>
+                    <div className={styles.cellTable} style={{ width: `${(col * cellSize)}px` }}>
+                        {cellBox}
+                    </div>
+                    
+                </div>}
+                <div className={styles.truthTable}>
+                    <h2>Truth Table</h2>
+                    {truthTable}
                 </div>
-            </div>}
+            </div>
             <div className={styles.formulaArea}>
                 <h1>FALSE</h1>
             </div>
