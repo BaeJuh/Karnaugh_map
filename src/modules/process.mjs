@@ -246,30 +246,3 @@ class Cell extends Node {
 }
 
 export { Cell, KarnaughMap };
-
-// class Cell extends Node {
-//     constructor(id) {
-//         super(id);
-//         this._status = false;
-//         this._id = id;
-//         this._status = false; // boolean
-//         this._value = undefined;
-
-//         this._right = null;
-//         this._under = null;
-//         this.left = null;
-//         this.top = null;
-//     }
-//     get id() { return this._id; }
-
-//     set right(cell) { this._right = cell; }
-//     get right() { return this._right }
-//     set under(cell) { this._under = cell; }
-//     get under() { return this._under; }
-
-//     get value() { return this._value; }
-//     set value(data) { this._value = data; }
-
-//     changeStatus() { this._status = !this._status; }
-//     get status() { return this._status; }
-// }
