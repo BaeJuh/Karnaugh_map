@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../style/Content.module.scss";
 
 import { grayCode, getVariables } from "../modules/moduleOfContent.mjs";
-import { Cell, KarnaughMap, karnaughMap } from "../modules/process.mjs";
+import { Cell, KarnaughMap } from "../modules/process.mjs";
 
 const Content = () => {
     const cellSize = 80;
