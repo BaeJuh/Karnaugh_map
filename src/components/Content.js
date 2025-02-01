@@ -15,6 +15,7 @@ const Content = () => {
     const [[row, col], setRowCol] = useState([0, 0]); // for dynamic display
 
     const [truthTable, setTruthTable] = useState(null);
+    const [formula, setFormula] = useState("");
 
     useEffect(() => {
         setVariables(getVariables(inputText));
@@ -84,7 +85,23 @@ const Content = () => {
             }));
 
             const karnaughMap = new KarnaughMap("karnaughMap");
-            karnaughMap.run(cells);
+            const connectedNodes = karnaughMap.run(cells);
+
+            const connectedValues = connectedNodes.map(eachGroup => {
+                return eachGroup.map(node => node.value);
+            });
+            const formulaArray = connectedValues.map(eachGroup => {
+                return eachGroup.reduce((groupedValue, currentValue) => {
+                    return groupedValue.map((eachValue, i) => {
+                        return eachValue === currentValue[i] ? eachValue : null;
+                    });
+                });
+            });
+            const formula = formulaArray.map((term) => {
+                return term.reduce((termStr, value, i) => {
+                    return termStr + (value !== null ? (value === 0 ? `${variables[i]}'` : `${variables[i]}`) : "");
+                }, "");
+            }).join(" + ");
 
             const truthTableJSX = cells.reduce((acc, row) => {
                 return [[...acc], [...row.map((cell) => {
@@ -93,12 +110,14 @@ const Content = () => {
                     return (
                         <div key={cell.id} className={styles.truthTableRow}>
                             <p>{logicFormula}</p>
-                            <p style={{color: resultColor}}>{result}</p>
+                            <p style={{ color: resultColor }}>{result}</p>
                         </div>
 
                     );
                 })]];
             }, []);
+
+            setFormula(formula ? formula : (connectedNodes.length > 0 ? "TRUE" : "FALSE"));
             setTruthTable(truthTableJSX);
         }
     }, [cells]);
@@ -119,7 +138,7 @@ const Content = () => {
                     <div className={styles.cellTable} style={{ width: `${(col * cellSize)}px` }}>
                         {cellBox}
                     </div>
-                    
+
                 </div>}
                 <div className={styles.truthTable}>
                     <h2>Truth Table</h2>
@@ -127,7 +146,7 @@ const Content = () => {
                 </div>
             </div>
             <div className={styles.formulaArea}>
-                <h1>FALSE</h1>
+                <h1>{formula ? formula : "FALSE"}</h1>
             </div>
         </div>
     );
