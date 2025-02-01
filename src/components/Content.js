@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../style/Content.module.scss";
 
 import { grayCode, getVariables } from "../modules/moduleOfContent.mjs";
-import { Cell, KarnaughMap, karnaughMap } from "../modules/linkedList.mjs";
+import { Cell, KarnaughMap, karnaughMap } from "../modules/process.mjs";
 
 const Content = () => {
     const cellSize = 80;
@@ -58,15 +58,6 @@ const Content = () => {
                     const identifier = `cell_${row_i}_${col_i}`;
                     const cell = new Cell(identifier);
                     cell.value = [...rowCase, ...colCase];
-                    // return (
-                    //     <div key={identifier} className={styles.cell} onClick={(e) => {
-                    //         console.log(identifier);
-                    //         cell.changeStatus();
-                    //         console.log(initCellStatus[row_i][col_i]); 
-                    //         console.log(cell.status);
-                    //     }}>
-                    //         {`${rowCase.join(" ")} ${colCase.join(" ")}`}
-                    //     </div>);
                     return cell;
                 });
             });
@@ -95,7 +86,6 @@ const Content = () => {
             const karnaughMap = new KarnaughMap("karnaughMap");
             karnaughMap.run(cells);
 
-            console.log(cells)
             const truthTableJSX = cells.reduce((acc, row) => {
                 return [[...acc], [...row.map((cell) => {
                     const logicFormula = cell.value.join(" ");

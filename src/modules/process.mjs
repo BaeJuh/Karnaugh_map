@@ -103,6 +103,7 @@ class KarnaughMap extends TwoWayLinkedList {
 
     setResultBundles() {
         const visitedNode = new Set();
+        const bundles = new Set();
         if (this._startNode) {
             let rowNode = this._startNode;
 
@@ -112,12 +113,8 @@ class KarnaughMap extends TwoWayLinkedList {
 
                 while (currentNode) {
                     if (currentNode.status) {
-                        // const connectedNode = this.checkConnectedNode(currentNode);
-                        this.checkConnectedNode(currentNode);
-
-                        // if (this.sizeCheck(connectedNode)) {
-                        //     this.resultBundles.push(connectedNode);
-                        // }
+                        const group = this.checkConnectedNode(currentNode);
+                        bundles.add(...group);
                     }
                     visitedNode.add(currentNode);
                     currentNode = currentNode.right;
@@ -126,35 +123,95 @@ class KarnaughMap extends TwoWayLinkedList {
                 rowNode = rowNode.under; // next row
             }
         }
+
+        console.log(bundles);
     }
 
     checkConnectedNode(node) {
-        const connectedNode = new Set();
-        const lineUp = [node];
+        // const connectedNode = new Set();
+        // const lineUp = [node];
 
-        while (lineUp.length > 0) {
-            const currentNode = lineUp.pop();
+        // while (lineUp.length > 0) {
+        //     const currentNode = lineUp.pop();
 
-            if (!connectedNode.has(currentNode)) {
-                connectedNode.add(currentNode);
+        //     if (!connectedNode.has(currentNode)) {
+        //         connectedNode.add(currentNode);
 
-                if (currentNode.over?.status) {
-                    lineUp.push(currentNode.over);
-                }
-                if (currentNode.under?.status) {
-                    lineUp.push(currentNode.under);
-                }
-                if (currentNode.left?.status) {
-                    lineUp.push(currentNode.left);
-                }
-                if (currentNode.right?.status) {
-                    lineUp.push(currentNode.right);
+        //         if (currentNode.over?.status) {
+        //             lineUp.push(currentNode.over);
+        //         }
+        //         if (currentNode.under?.status) {
+        //             lineUp.push(currentNode.under);
+        //         }
+        //         if (currentNode.left?.status) {
+        //             lineUp.push(currentNode.left);
+        //         }
+        //         if (currentNode.right?.status) {
+        //             lineUp.push(currentNode.right);
+        //         }
+        //     }
+        // }
+        // // console.log(node.value, [...connectedNode]);
+        // const checkedNodes = [...connectedNode];
+        // while(!(this.rectangleCheck(checkedNodes) && this.sizeCheck(checkedNodes))) {
+        //     checkedNodes.pop();
+        // }
+        // console.log(node.value, checkedNodes);
+
+        // return checkedNodes;
+
+        const result = [];
+        for (let row = 1; row < 5; row++) {
+            for (let col = 1; col < 5; col++) {
+                if ((Math.log(row * col) / Math.log(2)) % 1 === 0) {
+                    // 묶기
+                    const group = this.searchConnectedNode(node, row, col);
+                    if (group && this.rectangleCheck(group) && this.sizeCheck(group)) {
+                        result.push(group);
+                    }
                 }
             }
         }
+        const groupSize = result.reduce((maxLength, cur) => {
+            return cur.length > maxLength ? cur.length : maxLength;
+        }, 0);
+        return result.filter((group) => group.length === groupSize);
+    }
 
+    searchConnectedNode(node, row, col) {
+        const group = [];
 
-        console.log(node.value, [...connectedNode]);
+        let rowNode = node;
+
+        for (let i = 0; i < row; i++) {
+            let currentNode = rowNode;
+
+            for (let j = 0; j < col; j++) {
+                if (currentNode?.status) {
+                    group.push(currentNode);
+                    currentNode = currentNode.right;
+                    continue;
+                }
+                return null;
+            }
+            rowNode = rowNode.under;
+        }
+
+        return group;
+    }
+
+    rectangleCheck(connectedNode) {
+        const row = new Set();
+        const col = new Set();
+
+        connectedNode.forEach((cell) => {
+            const [, rowPos, colPos] = cell.id.split("_");
+
+            row.add(Number(rowPos));
+            col.add(Number(colPos));
+        });
+
+        return (row.size * col.size) === connectedNode.length;
     }
 
     sizeCheck(connectedNode) {
