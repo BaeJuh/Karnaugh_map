@@ -38,5 +38,12 @@
 
         background-color: tomato;
         color: $font-color;
+
+        position: relative;
+        .closeIcon {
+            position: absolute;
+            @include goToCenter;
+            top: 51%;
+        }
     }
 }
