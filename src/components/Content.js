@@ -1,128 +1,20 @@
 import { useEffect, useState } from "react";
 import styles from "../style/Content.module.scss";
 
-import { grayCode, getVariables } from "../modules/moduleOfContent.mjs";
-import { Cell, KarnaughMap } from "../modules/process.mjs";
+import { getVariables } from "../modules/moduleOfContent.mjs";
+
+import TruthTable from "./Content_TruthTable";
+import CellTable from "./Content_CellTable";
+import Formula from "./Content_Formula";
 
 const Content = () => {
-    const cellSize = 80;
-    const tagSize = 50;
     const [inputText, setInputText] = useState("A, B, C"); // string // for { onChange={e => setInputText(e.target.value)} }
     const [variables, setVariables] = useState(getVariables(inputText)); // list ["A", "B", "C"]
-    const [[variableTag, rowTag, colTag], setRowColTag] = useState([]); // JSX
     const [cells, setCells] = useState(null); // instance of Cell
-    const [cellBox, setCellBox] = useState(null); // JSX
-    const [[row, col], setRowCol] = useState([0, 0]); // for dynamic display
-
-    const [truthTable, setTruthTable] = useState(null);
-    const [formula, setFormula] = useState("");
 
     useEffect(() => {
         setVariables(getVariables(inputText));
     }, [inputText]);
-
-    useEffect(() => {
-        // setCells(null);
-        if (variables.length !== 0) {
-            const variableCount = variables.length;
-            const cellCount = 2 ** variableCount;
-            const divisor = [...new Array(Math.floor(cellCount ** 0.5))]
-                .reduce((divisor, _, i) => {
-                    return cellCount % (i + 2) === 0 ? i + 2 : divisor;
-                }, 0);
-
-            const [row, col] = [divisor, cellCount / divisor];
-
-            const border = Math.floor(variableCount / 2);
-            const [rowVariable, colVariable] = variableCount === 1 ? [variables, []] : [variables.slice(0, border), variables.slice(border)];
-
-            const variableTag = (
-                <div className={styles.variable}>
-                    <div className={styles.colVariable}><p>{colVariable.join(" ")}</p></div>
-                    <div className={styles.rowVariable}><p>{rowVariable.join(" ")}</p></div>
-                </div>
-            );
-
-            const [rowTruthTable, colTruthTable] = [grayCode(rowVariable.length), grayCode(colVariable.length)];
-
-            const rowTagList = rowTruthTable.map((rowCase, i) => {
-                return [<div key={`rowTag_${i}`} className={styles.rowTag}><span>{rowCase.join(" ")}</span></div>];
-            });
-
-            const colTagList = colTruthTable.map((colCase, i) => {
-                return <div key={`colTag_${i}`} className={styles.colTag}>{colCase.join(" ")}</div>;
-            });
-
-            const cellList = rowTruthTable.map((rowCase, row_i) => {
-                return colTruthTable.map((colCase, col_i) => {
-                    // initCellStatus[row_i].push(false);
-                    const identifier = `cell_${row_i}_${col_i}`;
-                    const cell = new Cell(identifier);
-                    cell.value = [...rowCase, ...colCase];
-                    return cell;
-                });
-            });
-            setCells(cellList);
-            setRowColTag([variableTag, rowTagList, colTagList]); // 순서 반드시 확인할 것 [[variableTag, rowTag, colTag], setRowColTag]
-            setRowCol([row, col]);
-        }
-    }, [variables]);
-
-
-    useEffect(() => {
-        if (cells) {
-            setCellBox(cells.map((rowCell) => {
-                return rowCell.map((cell) => {
-                    return (
-                        <div key={cell.id} className={styles.cell} style={cell.status ? { backgroundColor: "#ff7247" } : null}
-                            onClick={(e) => {
-                                cell.changeStatus();
-                                setCells([...cells]);
-                            }}>
-                            {`${cell.value.join(" ")}`}
-                        </div>);
-                });
-            }));
-
-            const karnaughMap = new KarnaughMap("karnaughMap");
-            const connectedNodes = karnaughMap.run(cells);
-
-            const connectedValues = connectedNodes.map(eachGroup => {
-                return eachGroup.map(node => node.value);
-            });
-            const formulaArray = connectedValues.map(eachGroup => {
-                return eachGroup.reduce((groupedValue, currentValue) => {
-                    return groupedValue.map((eachValue, i) => {
-                        return eachValue === currentValue[i] ? eachValue : null;
-                    });
-                });
-            });
-            const formula = formulaArray.map((term) => {
-                return term.reduce((termStr, value, i) => {
-                    return termStr + (value !== null ? (value === 0 ? `${variables[i]}'` : `${variables[i]}`) : "");
-                }, "");
-            }).join(" + ");
-
-            const truthTableJSX = cells.reduce((acc, row) => {
-                return [[...acc], [...row.map((cell) => {
-                    const logicFormula = cell.value.map((value, i) => (value === 0 ? `${variables[i]}'` : `${variables[i]}`)).join(" ");
-                    const [result, resultColor] = cell.status ? ["T", "#04d9ff"] : ["F", "#ff7247"];
-                    return (
-                        <div key={cell.id} className={styles.truthTableRow}>
-                            <p>{logicFormula}</p>
-                            <p style={{ color: resultColor }}>{result}</p>
-                        </div>
-
-                    );
-                })]];
-            }, []);
-
-            setFormula(formula ? formula : (connectedNodes.length > 0 ? "TRUE" : "FALSE"));
-            setTruthTable(truthTableJSX);
-        }
-    }, [cells]);
-
-
 
     return (
         <div className={styles.contentArea}>
@@ -130,24 +22,12 @@ const Content = () => {
                 <input value={inputText} onChange={e => setInputText(e.target.value)}></input>
                 <p className={styles.explanation}>변수 이름 (쉼표로 구분)</p>
             </div>
-            <div className={styles.tableArea}>
-                {cells === null ? "변수를 입력해주세요." : <div className={styles.cellArea} style={{ width: `${(col * cellSize) + tagSize}px` }}>
-                    {variableTag}
-                    <div className={styles.colTags}>{colTag}</div>
-                    <div className={styles.rowTags} style={{ width: `${tagSize}px` }}>{rowTag}</div>
-                    <div className={styles.cellTable} style={{ width: `${(col * cellSize)}px` }}>
-                        {cellBox}
-                    </div>
-
+            {inputText === "" ? "변수를 입력해주세요." :
+                <div className={styles.tableArea}>
+                    <CellTable variables={variables} cells={[cells, setCells]}></CellTable>
+                    <TruthTable variables={variables} cells={cells}></TruthTable>
                 </div>}
-                <div className={styles.truthTable}>
-                    <h2>Truth Table</h2>
-                    {truthTable}
-                </div>
-            </div>
-            <div className={styles.formulaArea}>
-                <h1>{formula ? formula : "FALSE"}</h1>
-            </div>
+            <Formula variables={variables} cells={cells}></Formula>
         </div>
     );
 }

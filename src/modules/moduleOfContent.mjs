@@ -40,7 +40,4 @@ const grayCode = (codeLength) => {
     });
 }
 
-export {
-    grayCode,
-    getVariables
-};
+export { grayCode, getVariables };
