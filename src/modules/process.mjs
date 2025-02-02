@@ -143,8 +143,8 @@ class KarnaughMap extends TwoWayLinkedList {
 
     checkConnectedNode(node) {
         const result = [];
-        for (let row = 1; row <= this.row; row++) {
-            for (let col = 1; col <= this.col; col++) {
+        for (let row = 1; row <= this.row; row*=2) {
+            for (let col = 1; col <= this.col; col*=2) {
                 if ((Math.log(row * col) / Math.log(2)) % 1 === 0) {
                     // 묶기
                     const directions = [
@@ -166,25 +166,6 @@ class KarnaughMap extends TwoWayLinkedList {
             return cur.length > maxLength ? cur.length : maxLength;
         }, 0);
         return result.filter((group) => group.length === groupSize);
-        // for (let row = this.row; row > 1; row--) {
-        //     for (let col = this.col; col > 1; col--) {
-        //         if ((Math.log(row * col) / Math.log(2)) % 1 === 0) {
-        //             // 묶기
-        //             const directions = [
-        //                 { "ver": false, "hor": true }, // 하 우
-        //                 { "ver": false, "hor": false }, // 하 좌
-        //                 { "ver": true, "hor": true }, // 상 우
-        //                 { "ver": true, "hor": false }, // 상 좌
-        //             ];
-        //             for (const direction of directions) {
-        //                 const group = this.searchConnectedNode(node, row, col, direction);
-        //                 if (group && this.rectangleCheck(group) && this.sizeCheck(group)) {
-        //                     result.push(group);
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
     }
 
     searchConnectedNode(node, row, col, direction) {
