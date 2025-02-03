@@ -1,9 +1,10 @@
 @import "_settings";
-// @import "Mobile.module.scss";
+@import "_responsive";
 
 .cellArea {
-    $cellSize: 70px;
-    $tagSize: 40px;
+    $cellSize: 80px;
+    $tagSize: 50px;
+    height: 100%;
     @mixin setting {
         display: inline-block;
         text-align: center;
@@ -11,6 +12,7 @@
         line-height: $cellSize;
     }
     // display: inline-block;
+    min-width: 790px;
 
     .variable {
         @include setting;
@@ -25,7 +27,7 @@
         @mixin VariableSetting {
             white-space: nowrap;
             font: {
-                size:14px;
+                size:16px;
                 weight: 900;
             }
             p {
@@ -95,5 +97,19 @@
         .cell:hover {
             background-color: $neon;
         }
+    }
+}
+
+@include mobile {
+    .cellArea {
+        margin: auto;
+        min-width: 0;
+        width: 100%;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+        border-top: 2px solid rgba(255, 255, 255, 0.7);
+        padding: 0 0 20px 0;
+        margin: 0 0 20px 0;
+        overflow: scroll;
+        height: 53%;
     }
 }

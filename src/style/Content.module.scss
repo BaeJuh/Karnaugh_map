@@ -1,5 +1,5 @@
 @import "_settings";
-@import "Mobile.module.scss";
+@import "_responsive";
 
 .contentArea {
     width: 100%;
@@ -12,11 +12,18 @@
 
     .tableArea {
         width: 100%;
+        height: 500px;
+
+        overflow: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none ;
 
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-around;
+
+        position: relative;
     }
 }
 
@@ -42,5 +49,16 @@
     }
     .explanation {
         text-align: right;
+    }
+}
+
+@include mobile {
+    .contentArea {
+        
+        .tableArea {
+            height: 80%;
+            display: block;
+            position: relative;
+        }
     }
 }

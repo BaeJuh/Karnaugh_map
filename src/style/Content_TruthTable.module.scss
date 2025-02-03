@@ -1,16 +1,18 @@
 @import "_settings";
+@import "_responsive";
 
 .truthTable {
-    width: 300px;
+    min-width: 300px;
     height: 360px;
     background-color: $backgroundColor;
     box-shadow: 0 0 7px $neon;
+    border-radius: 5px;
     padding: 10px;
 
     overflow: scroll;
-
     -ms-overflow-style: none;
     scrollbar-width: none ;
+
     .truthTable:-webkit-scrollbar {
         display: none;
     }
@@ -38,5 +40,19 @@
                 weight: 900;
             }
         }
+    }
+}
+
+@include mobile {
+    .truthTable {
+        position: fixed;
+        width: 90%;
+        height: 320px;
+
+        left: 50%;
+        transform: translate(-50%, 0);
+
+        margin: auto;
+
     }
 }

@@ -6,8 +6,8 @@ import { Cell } from "../modules/process.mjs";
 
 const CellTable = (props) => {
     const { variables, cells: [cells, setCells] } = props;
-    const cellSize = 80;
-    const tagSize = 50;
+    const cellSize = 90;
+    const tagSize = 60;
     const [[variableTag, rowTag, colTag], setRowColTag] = useState([]); // JSX
     const [[row, col], setRowCol] = useState([0, 0]); // for dynamic display
     const [cellBox, setCellBox] = useState(null); // JSX

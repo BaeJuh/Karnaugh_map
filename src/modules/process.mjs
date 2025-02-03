@@ -127,17 +127,14 @@ class KarnaughMap extends TwoWayLinkedList {
                 rowNode = rowNode.under; // next row
             }
         }
-        const covered = new Set();
-        let filteredBundles = bundles.sort((a, b) => a.length - b.length).filter((point, i, originBundles) => {
+        const filteredBundles = bundles.sort((a, b) => a.length - b.length).filter((point, i, originBundles) => {
             for (const bundle of [...originBundles].slice(i + 1)) {
                 if (point.every(cell => bundle.includes(cell))) {
                     return false;
                 };
             }
-            point.forEach((pointCell) => covered.add(pointCell.id))
             return true;
         });
-        console.log(filteredBundles);
         return filteredBundles;
     }
 
