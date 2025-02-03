@@ -127,7 +127,6 @@ class KarnaughMap extends TwoWayLinkedList {
                 rowNode = rowNode.under; // next row
             }
         }
-        // 중복제거 필요 
         const covered = new Set();
         let filteredBundles = bundles.sort((a, b) => a.length - b.length).filter((point, i, originBundles) => {
             for (const bundle of [...originBundles].slice(i + 1)) {
