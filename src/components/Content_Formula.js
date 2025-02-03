@@ -8,7 +8,7 @@ const Formula = (props) => {
     const [formula, setFormula] = useState("");
 
     useEffect(() => {
-        if(cells) {
+        if (cells) {
             const karnaughMap = new KarnaughMap("karnaughMap");
             const connectedNodes = karnaughMap.run(cells);
 

@@ -85,20 +85,17 @@ class KarnaughMap extends TwoWayLinkedList {
             let prevNode = null;
             rowNode.forEach((currentNode, col_i) => {
                 this.col++;
-
                 if (this.startNode === null) { // 아무것도 없을 때 설정
                     this.startNode = currentNode;
                 }
-                if (prevNode) { // 가로 연결
+                if (prevNode) { // 행 연결
                     super.connectHorizontally(prevNode, currentNode);
-
                     if ((rowNode.length - 1) === col_i && currentNode.right === null && super.searchNode(`cell_${row_i}_${0}`).left === null) { // 행의 마지막 노드 일때
                         super.connectHorizontally(currentNode, super.searchNode(`cell_${row_i}_${0}`));
                     }
                 }
-                if (row_i > 0) { // 세로 연결
+                if (row_i > 0) { // 열 연결
                     super.connectVertically(super.searchNode(`cell_${row_i - 1}_${col_i}`), currentNode);
-
                     if ((nodes.length - 1) === row_i) { // 마지막 행의 노드 일때
                         super.connectVertically(currentNode, super.searchNode(`cell_${0}_${col_i}`))
                     }
@@ -113,12 +110,12 @@ class KarnaughMap extends TwoWayLinkedList {
         const bundles = [];
         if (this._startNode) {
             let rowNode = this._startNode;
-
             while (rowNode) {
                 let currentNode = rowNode;
                 if (visitedNode.has(currentNode)) break;
 
                 while (currentNode) {
+                    
                     if (currentNode.status) {
                         const groups = this.checkConnectedNode(currentNode);
                         bundles.push(...groups);
@@ -131,28 +128,31 @@ class KarnaughMap extends TwoWayLinkedList {
             }
         }
         // 중복제거 필요 
-        return bundles.sort((a, b) => a.length - b.length).filter((point, i, originBundles) => {
-            for (const biggerGroup of [...originBundles].slice(i + 1)) {
-                if (point.every(cell => biggerGroup.includes(cell))) {
+        const covered = new Set();
+        let filteredBundles = bundles.sort((a, b) => a.length - b.length).filter((point, i, originBundles) => {
+            for (const bundle of [...originBundles].slice(i + 1)) {
+                if (point.every(cell => bundle.includes(cell))) {
                     return false;
                 };
             }
+            point.forEach((pointCell) => covered.add(pointCell.id))
             return true;
         });
+        console.log(filteredBundles);
+        return filteredBundles;
     }
 
     checkConnectedNode(node) {
         const result = [];
-        for (let row = 1; row <= this.row; row*=2) {
-            for (let col = 1; col <= this.col; col*=2) {
+        const directions = [
+            { "ver": false, "hor": true }, // 하 우
+            { "ver": false, "hor": false }, // 하 좌
+            { "ver": true, "hor": true }, // 상 우
+            { "ver": true, "hor": false }, // 상 좌
+        ];
+        for (let row = 1; row <= this.row; row *= 2) {
+            for (let col = 1; col <= this.col; col *= 2) {
                 if ((Math.log(row * col) / Math.log(2)) % 1 === 0) {
-                    // 묶기
-                    const directions = [
-                        { "ver": false, "hor": true }, // 하 우
-                        { "ver": false, "hor": false }, // 하 좌
-                        { "ver": true, "hor": true }, // 상 우
-                        { "ver": true, "hor": false }, // 상 좌
-                    ];
                     for (const direction of directions) {
                         const group = this.searchConnectedNode(node, row, col, direction);
                         if (group && this.rectangleCheck(group) && this.sizeCheck(group)) {
@@ -172,9 +172,9 @@ class KarnaughMap extends TwoWayLinkedList {
         const group = [];
 
         let rowNode = node;
-        for (let i = 0; i < row; i++) {
+        for (let i = row; i > 0; i--) {
             let currentNode = rowNode;
-            for (let j = 0; j < col; j++) {
+            for (let j = col; j > 0; j--) {
                 if (currentNode?.status) {
                     group.push(currentNode);
                     currentNode = direction["hor"] ? currentNode.right : currentNode.left;
