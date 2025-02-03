@@ -2,7 +2,7 @@ import styles from "../style/Title.module.scss";
 const Title = () => {
 
     return (
-        <h1 className={styles.title}>
+        <h1 className={styles.backgroundTitle}>
             KARNAUGH MAP
         </h1>
     )

@@ -97,7 +97,7 @@ class KarnaughMap extends TwoWayLinkedList {
                 if (row_i > 0) { // 열 연결
                     super.connectVertically(super.searchNode(`cell_${row_i - 1}_${col_i}`), currentNode);
                     if ((nodes.length - 1) === row_i) { // 마지막 행의 노드 일때
-                        super.connectVertically(currentNode, super.searchNode(`cell_${0}_${col_i}`))
+                        super.connectVertically(currentNode, super.searchNode(`cell_${0}_${col_i}`));
                     }
                 }
                 prevNode = currentNode;
