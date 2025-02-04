@@ -8,7 +8,7 @@ const Main = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.title}>
-                <h2>Karnaugh map solver</h2>
+                <h2>Karnaugh Map Solver</h2>
                 <button className={styles.decoButton}>
                     <RiCloseLine size="25" className={styles.closeIcon}></RiCloseLine>
                 </button>

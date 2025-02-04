@@ -13,20 +13,29 @@ const Content = () => {
     const [cells, setCells] = useState(null); // instance of Cell
 
     useEffect(() => {
-        setVariables(getVariables(inputText));
+        const variables = getVariables(inputText);
+        if (variables.length <= 6) {
+            setVariables(variables);
+        }
     }, [inputText]);
 
+    const limitVariableCount = (e) => {
+        (getVariables(e.target.value).length > 6) || (setInputText(e.target.value));
+    }
     return (
         <div className={styles.contentArea}>
             <div className={styles.inputArea}>
-                <input value={inputText} onChange={e => setInputText(e.target.value)}></input>
-                <p className={styles.explanation}>변수 이름 (쉼표로 구분)</p>
+                <input value={inputText} onChange={e => { limitVariableCount(e) }} placeholder="A, B, C"></input>
+                <p className={styles.explanation}>변수 이름 (쉼표로 구분)<br></br>6개 까지 입력 가능</p>
             </div>
-            {inputText === "" ? "변수를 입력해주세요." :
-                <div className={styles.tableArea}>
-                    <CellTable variables={variables} cells={[cells, setCells]}></CellTable>
-                    <TruthTable variables={variables} cells={cells}></TruthTable>
-                </div>}
+            <div className={styles.tableArea}>
+                {inputText === "" ? "변수를 입력해주세요." :
+                    <>
+                        <CellTable variables={variables} cells={[cells, setCells]}></CellTable>
+                        <TruthTable variables={variables} cells={cells}></TruthTable>
+                    </>
+                }
+            </div>
             <Formula variables={variables} cells={cells}></Formula>
         </div>
     );

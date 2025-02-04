@@ -18,6 +18,7 @@ html, body {
 .container {
     width: 100vw;
     height: 100vh;
+    min-height: 600px;
 
     background-color: $out-backgroundColor;
 }

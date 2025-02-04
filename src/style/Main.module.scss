@@ -4,7 +4,7 @@
 .wrapper {
     width: 90%;
     height: 85%;
-    min-height: 500px;
+    min-height: 600px;
     
     color: $font-color;
 
@@ -14,7 +14,7 @@
     backdrop-filter: blur(4.4px);
     -webkit-backdrop-filter: blur(4.4px);
 
-    position: absolute;
+    position: relative;
     @include goToCenter;
 
     overflow: hidden;
@@ -27,9 +27,9 @@
         align-items: center;
         justify-content: space-between;
 
-        padding: 0 10px;
+        padding: 0 10px 0 15px;
 
-        font-size: 15px;
+        font-size: 18px;
     }
     .decoButton {
         width: 25px;
@@ -56,10 +56,6 @@
     }
 
     .title {
-        // h2 {
-        //     width: 100%;
-        //     text-align: center;
-        // }
         display: none !important;
     }
 }
