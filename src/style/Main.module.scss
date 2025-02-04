@@ -46,6 +46,31 @@
             @include goToCenter;
             top: 51%;
         }
+        position: relative;
+    }
+    .whatIs {
+        z-index: 100;
+        position: absolute;
+        top: 60%;
+        right: 50%;
+
+        width: 350px;
+        height: 250px;
+
+        background-color: $backgroundColor;
+        box-shadow: inset 0 0 3px $neon;
+        border-radius: 10px 0 10px 10px;
+
+        font-size: 18px;
+        text-align: left;
+        
+        display: flex;
+        align-items: center;
+
+        padding: 20px;
+        line-height: 1.5;
+
+        transition: .5s;
     }
 }
 
