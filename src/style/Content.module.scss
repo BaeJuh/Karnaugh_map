@@ -40,6 +40,7 @@
         height: $height;
 
         padding: 0 13px;
+        margin-bottom: 5px;
 
         color: white;
         background-color: $backgroundColor;
@@ -61,6 +62,17 @@
 @include mobile {
     .contentArea {
         justify-content: space-around;
+        .inputArea {
+            margin-bottom: 20px;
+            input {
+                width: 90%;
+                margin: 0 5%;
+            }
+            // text-align: center;
+            p {
+                text-align: center;
+            }
+        }
         .tableArea {
             height: 80%;
             display: block;

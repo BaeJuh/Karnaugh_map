@@ -48,11 +48,11 @@
 @include mobile {
     .truthTable {
         position: fixed;
-        width: 90%;
-        height: 300px;
-
         left: 50%;
         transform: translate(-50%, 0);
+        
+        width: 90%;
+        height: 300px;
 
         margin: auto;
     }
