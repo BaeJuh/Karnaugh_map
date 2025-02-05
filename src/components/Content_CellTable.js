@@ -75,7 +75,7 @@ const CellTable = (props) => {
     }, [cells]);
 
     return (
-        <div className={styles.cellArea} style={{ width: `${(col * cellSize) + tagSize}px`, height: row > 4 ? "100%" : `${(row * cellSize) + tagSize}px` }}>
+        <div className={styles.cellArea} style={{ minWidth: `${(col * cellSize) + tagSize}px`, width: `${(col * cellSize) + tagSize}px`, height: row > 4 ? "100%" : `${(row * cellSize) + tagSize}px` }}>
             {variableTag}
             <div className={styles.colTags}>{colTag}</div>
             <div className={styles.rowTags} style={{ width: `${tagSize}px` }}>{rowTag}</div>

@@ -14,16 +14,22 @@
     scrollbar-width: none ;
 
     // position: fixed;
+    position: relative;
 
     .truthTable:-webkit-scrollbar {
         display: none;
     }
     h2 {
         text-align: center;
+        transition: .3s;
         font: {
             size: 24px;
             weight: 900;
         }
+        cursor: pointer;
+    }
+    h2:hover {
+        color: $neon;
     }
 
     .truthTableRow {
@@ -55,5 +61,12 @@
         height: 300px;
 
         margin: auto;
+
+        h2:hover {
+            color: inherit;
+        }
+        h2:active {
+            color: $neon;
+        }
     }
 }

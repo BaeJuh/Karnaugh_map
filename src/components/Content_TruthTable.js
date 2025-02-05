@@ -4,6 +4,7 @@ import styles from "../style/Content_TruthTable.module.scss";
 const TruthTable = (props) => {
     const { cells, variables } = props;
     const [truthTable, setTruthTable] = useState(null);
+    const [isClose, setIsClose] = useState(false);
 
     useEffect(() => {
         if (cells) {
@@ -27,9 +28,14 @@ const TruthTable = (props) => {
     }, [cells]);
 
     return (
-        <div className={styles.truthTable}>
-            <h2>Truth Table</h2>
+        <div className={styles.truthTable} style={{ height: isClose ? "55px" : "360px" }}>
+            <h2 onClick={
+                (e) => {
+                    setIsClose(!isClose);
+                }
+            }>{isClose ? "Show Truth Table" : "Truth Table"}</h2>
             {truthTable}
+
         </div>
     );
 }

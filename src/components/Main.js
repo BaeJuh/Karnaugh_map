@@ -14,7 +14,7 @@ const Main = () => {
             <div className={styles.title}>
                 <h2>Karnaugh Map Solver</h2>
                 <button className={styles.decoButton} onMouseOver={e => { setVisible(true) }} onMouseOut={e => setVisible(false)}>
-                    <FaQuestion size="17" className={styles.closeIcon}></FaQuestion>
+                    <FaQuestion size="17" className={styles.whatIsIcon}></FaQuestion>
                     <WhatIs visible={explainVisible}></WhatIs>
                 </button>
             </div>

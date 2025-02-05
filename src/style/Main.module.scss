@@ -41,10 +41,11 @@
         color: $font-color;
 
         position: relative;
-        .closeIcon {
+        .whatIsIcon {
             position: absolute;
             @include goToCenter;
             top: 51%;
+            left: 48%
         }
         position: relative;
     }
