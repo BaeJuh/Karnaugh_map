@@ -10,14 +10,15 @@
 
     background: rgba(0, 76, 72, 0.78);
     border-radius: 5px;
-    box-shadow: 0 4px 30px rgba(0, 255, 149, 0.1);
+    box-shadow: 6px 6px 10px rgb(20, 20, 20);
     backdrop-filter: blur(4.4px);
     -webkit-backdrop-filter: blur(4.4px);
 
-    position: relative;
+    position: absolute;
     @include goToCenter;
 
-    overflow: hidden;
+    overflow: scroll;
+    @include noScroll;
     .title {
         width: 100%;
         height: 40px;
@@ -30,49 +31,82 @@
         padding: 0 10px 0 15px;
 
         font-size: 18px;
-    }
-    .decoButton {
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        border: none;
-
-        background-color: tomato;
-        color: $font-color;
-
         position: relative;
-        .whatIsIcon {
-            position: absolute;
-            @include goToCenter;
-            top: 51%;
-            left: 48%
-        }
-        position: relative;
-    }
-    .whatIs {
-        z-index: 100;
-        position: absolute;
-        top: 60%;
-        right: 50%;
+        cursor: grab;
 
-        width: 350px;
-        height: 250px;
-
-        background-color: $backgroundColor;
-        box-shadow: inset 0 0 3px $neon;
-        border-radius: 10px 0 10px 10px;
-
-        font-size: 18px;
-        text-align: left;
+        .buttons {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            section a {
+                height: 100%;
+                line-height: 40px;
+                text-decoration: none;
+                color: white;
+                text-align: center;
+                margin-right: 20px;
+                font: {
+                    size: 20px;
+                    weight: 900; 
+                }
         
-        display: flex;
-        align-items: center;
+                // &:hover {
+                //     color: $neon;
+                //     text-decoration: underline;
+                // }
+            }
+            .decoButton {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: none;
 
-        padding: 20px;
-        line-height: 1.5;
+            margin: 0 5px;
 
-        transition: .5s;
+            background-color: tomato;
+            color: $font-color;
+            position: relative;
+                .iconStyle {
+                    position: absolute;
+                    @include goToCenter;
+                    top: 50%;
+                    left: 50%
+                }
+                
+                .whatIs {
+                    z-index: 100;
+                    position: absolute;
+                    top: 60%;
+                    right: 50%;
+
+                    width: 350px;
+                    height: 250px;
+
+                    background-color: $backgroundColor;
+                    box-shadow: inset 0 0 3px $neon;
+                    border-radius: 10px 0 10px 10px;
+
+                    font-size: 18px;
+                    text-align: left;
+                    
+                    display: flex;
+                    align-items: center;
+
+                    padding: 20px;
+                    line-height: 1.5;
+
+                    transition: .5s;
+                }
+            }
+            .code {
+                background-color: rgb(55, 174, 55);
+            }
+            .pdf {
+                background-color: rgb(165, 165, 49);
+            }
+        }
     }
+    
 }
 
 @include mobile {
@@ -82,6 +116,16 @@
     }
 
     .title {
-        display: none !important;
+        // display: none !important;
+        .buttons {
+            // width: 100%;
+            width: 30%;
+            justify-content: space-between;
+        }
+        h2 {
+            display: inline-block;
+            width: 100%;
+            font-size: 22px;
+        }
     }
 }

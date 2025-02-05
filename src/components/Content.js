@@ -26,7 +26,7 @@ const Content = () => {
         <div className={styles.contentArea}>
             <div className={styles.inputArea}>
                 <input value={inputText} onChange={e => { limitVariableCount(e) }} placeholder="A, B, C"></input>
-                <p className={styles.explanation}>변수 6개 까지 입력 가능 (쉼표로 구분) </p>
+                <p className={styles.explanation}>변수 6개까지 입력 가능(쉼표로 구분)</p>
             </div>
             <div className={styles.tableArea}>
                 {inputText === "" ? "변수를 입력해주세요." :
