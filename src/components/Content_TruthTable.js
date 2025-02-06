@@ -29,7 +29,7 @@ const TruthTable = (props) => {
     // style={{ height: isClose ? "55px" : "90%" }}
     return (
         <div className={styles.truthTable} style={ isMobile ? { height: isClose ? "50px" : "200px" } : null }>
-            <h2 onClick={isMobile ? e => {setIsClose(!isClose)} : null}>TruthTable</h2>
+            <h2 onClick={isMobile ? e => {setIsClose(!isClose)} : null}>Truth Table</h2>
             {truthTable}
         </div>
     );

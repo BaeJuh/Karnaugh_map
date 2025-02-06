@@ -7,6 +7,8 @@ const Formula = (props) => {
     const { cells, variables } = props;
     const [formula, setFormula] = useState("");
 
+    const [isPopup, setIsPopup] = useState(false);
+
     useEffect(() => {
         if (cells) {
             const karnaughMap = new KarnaughMap("karnaughMap");
@@ -34,7 +36,16 @@ const Formula = (props) => {
 
     return (
         <div className={styles.formulaArea}>
-            <h1>{formula ? formula : "FALSE"}</h1>
+            <button className={styles.popupButton} onClick={e => { setIsPopup(true) }}>결과 보기</button>
+            {isPopup ? <div className={styles.popupArea} onClick={e => {setIsPopup(false)}}>
+                <div className={styles.popupContent}>
+                    <div className={styles.popupTitle} >
+                        <h2>논리식</h2>
+                    </div>
+                    <p>{formula ? formula : "FALSE"}</p>
+                </div>
+            </div> : null}
+
         </div>
     );
 }

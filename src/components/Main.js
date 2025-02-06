@@ -74,9 +74,7 @@ const Main = () => {
                         <FaQuestion size="17" className={styles.iconStyle}></FaQuestion>
                         <WhatIs visible={explainVisible}></WhatIs>
                     </button>
-
                 </div>
-
             </div>
             <Content></Content>
         </div>

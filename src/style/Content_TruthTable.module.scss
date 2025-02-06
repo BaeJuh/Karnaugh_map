@@ -49,11 +49,16 @@
 
 @include mobile {
     .truthTable {
-        // position: fixed;
+        h2 {
+            position: sticky;
+            top: -11px;
+            left: 0;
 
-        // left: 50%;
-        // transform: translate(-50%, 0);
-        // top: 50%;
+            height: 40px;
+
+            background-color: $backgroundColor;
+            margin-top: -10px;
+        }
         
         width: 80%;
         height: 200px;
