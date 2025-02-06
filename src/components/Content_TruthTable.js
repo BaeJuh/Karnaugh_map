@@ -28,8 +28,8 @@ const TruthTable = (props) => {
 
     // style={{ height: isClose ? "55px" : "90%" }}
     return (
-        <div className={styles.truthTable} > 
-            <h2>TruthTable</h2>
+        <div className={styles.truthTable}>
+            <h2 >TruthTable</h2>
             {truthTable}
 
         </div>

@@ -1,0 +1,24 @@
+@import "_settings";
+
+.viewFiles {
+    position: absolute;
+    top: 48%;
+    right: 40px;
+    transform: translate(0, -50%);
+    a {
+        height: 25px;
+        // text-decoration: none;
+        color: white;
+        text-align: center;
+        margin: 0 10px;
+        font: {
+            size: 20px;
+            weight: 900; 
+        }
+
+        &:hover {
+            color: $neon;
+        }
+    }
+}
+

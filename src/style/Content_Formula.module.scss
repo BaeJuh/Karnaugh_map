@@ -5,10 +5,8 @@
     display: block;
 }
 
-// @include mobile {
-//     .formulaArea {
-//         h1 {
-//             margin-bottom: 100px;
-//         }
-//     }
-// }
+@include mobile {
+    .formulaArea {
+        margin-top: 20px;
+    }
+}

@@ -1,0 +1,33 @@
+@import "_settings";
+
+.viewCode {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: inline-block;
+    width: 80px;
+    height: 100px;
+    padding: 5px;
+
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    font: {
+        size: 12px;
+        weight: 900; 
+    }
+
+    .imageArea {
+        margin-top: 3px;
+        width: 100%;
+        height: 70px;
+
+        color: $neon;
+
+        background-image: url("");
+    }
+
+    &:hover {
+        box-shadow: 0 0 10px $neon;
+    }
+}

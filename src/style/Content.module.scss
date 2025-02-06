@@ -57,20 +57,15 @@
     .contentArea {
         display: block;
         text-align: center;
-        // margin-bottom: 100px;
-        min-height: 100vh;
-        // overflow: hidden;
+        height: 90%;
         
         .tableArea {
             margin: 0;
             // width: 100vw;
 
-            height: 70%;
+            height: auto;
             display: block;
             position: relative;
-
-            // overflow: scroll;
-            // @include noScroll;
         }
         .inputArea {
             margin: 20px 0;
@@ -78,7 +73,6 @@
                 width: 90%;
                 margin: 0 5%;
             }
-            // text-align: center;
             p {
                 text-align: center;
             }

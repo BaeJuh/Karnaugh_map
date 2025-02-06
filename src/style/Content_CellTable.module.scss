@@ -8,7 +8,7 @@
     height: 100%;
     // overflow: hidden;
     @include noScroll;
-    padding: 20px 0 0 0;
+    padding: 30px 0 0 0;
     position: relative;
 }
 .cellArea {
@@ -115,38 +115,54 @@
 @include mobile {
     .bigBox {
         width: 100vw;
-        height: 45%;
+        // height: 65%;
         // overflow: scroll;
         @include noScroll;
         display: block;
+        padding: 0;
     }
     .cellArea {
         margin: auto;
         border-top: 2px solid rgba(255, 255, 255, 0.7);
         padding: 0 0 20px 0;
         margin: auto;
-        margin-bottom: 20px;
+        // margin-bottom: 20px;
     }
     
-    $mobileSize: 40px;
+    $mobileSize: 35px;
     $tagSize: 50px;
+
+    .variable {
+        margin: 5px 0 5px 4px !important;
+    }
 
     .colTag {
         width: $mobileSize !important;
         height:$tagSize;
+        white-space: nowrap;
+
+        margin: 5px 4px !important;
+    }
+    .rowTags {
+        // display: inline-block;
+        float: left;
+        width: $tagSize !important;
+        .rowTag {
+            width: $tagSize;
+            height: $mobileSize !important;
+
+            line-height: $mobileSize !important;
+
+            margin: 4px 0 !important;
+        }
     }
     
-    .rowTag {
-        width: $tagSize;
-        height: $mobileSize !important;
-
-        line-height: $mobileSize !important;
-    }
     .cell {
         width: $mobileSize !important;
         height: $mobileSize !important;
+        margin: 4px !important;
         // box-shadow: none !important;
         line-height: $mobileSize !important;
-        // margin: 2px 3px !important;
+        
     }
 }
