@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import styles from "../style/Content_TruthTable.module.scss";
 
 const TruthTable = (props) => {
-    const { cells, variables } = props;
+    const { cells, variables, isMobile } = props;
     const [truthTable, setTruthTable] = useState(null);
-    const [isClose, setIsClose] = useState(false);
+    const [isClose, setIsClose] = useState(isMobile);
 
     useEffect(() => {
         if (cells) {
@@ -28,10 +28,9 @@ const TruthTable = (props) => {
 
     // style={{ height: isClose ? "55px" : "90%" }}
     return (
-        <div className={styles.truthTable}>
-            <h2 >TruthTable</h2>
+        <div className={styles.truthTable} style={ isMobile ? { height: isClose ? "50px" : "200px" } : null }>
+            <h2 onClick={isMobile ? e => {setIsClose(!isClose)} : null}>TruthTable</h2>
             {truthTable}
-
         </div>
     );
 }

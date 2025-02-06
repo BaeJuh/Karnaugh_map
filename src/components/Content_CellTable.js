@@ -5,18 +5,13 @@ import { grayCode } from "../modules/moduleOfContent.mjs";
 import { Cell } from "../modules/process.mjs";
 
 const CellTable = (props) => {
-    const { variables, cells: [cells, setCells] } = props;
+    const { variables, cells: [cells, setCells], isMobile } = props;
     const cellSize = 90;
     const mobileSize = 45;
     const tagSize = 60;
     const [[variableTag, rowTag, colTag], setRowColTag] = useState([]); // JSX
     const [[row, col], setRowCol] = useState([0, 0]); // for dynamic display
     const [cellBox, setCellBox] = useState(null); // JSX
-
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
-    useEffect(() => {
-        setIsMobile(window.innerWidth <= 500);
-    }, []);
 
     useEffect(() => {
         if (variables.length !== 0) {

@@ -12,6 +12,11 @@ const Content = () => {
     const [variables, setVariables] = useState(getVariables(inputText)); // list ["A", "B", "C"]
     const [cells, setCells] = useState(null); // instance of Cell
 
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
+    useEffect(() => {
+        setIsMobile(window.innerWidth <= 500);
+    }, []);
+
     useEffect(() => {
         const variables = getVariables(inputText);
         if (variables.length <= 6) {
@@ -31,8 +36,8 @@ const Content = () => {
             <div className={styles.tableArea}>
                 {inputText === "" ? "변수를 입력해주세요." :
                     <>
-                        <CellTable variables={variables} cells={[cells, setCells]}></CellTable>
-                        <TruthTable variables={variables} cells={cells}></TruthTable>
+                        <CellTable variables={variables} cells={[cells, setCells]} isMobile={isMobile}></CellTable>
+                        <TruthTable variables={variables} cells={cells} isMobile={isMobile}></TruthTable>
                     </>
                 }
             </div>
