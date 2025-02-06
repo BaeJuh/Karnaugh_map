@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "../style/Content.module.scss";
+import styles from "../style/Content_Formula.module.scss";
 
 import { KarnaughMap } from "../modules/process.mjs";
 

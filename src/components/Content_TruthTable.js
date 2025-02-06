@@ -26,13 +26,10 @@ const TruthTable = (props) => {
 
     }, [cells]);
 
+    // style={{ height: isClose ? "55px" : "90%" }}
     return (
-        <div className={styles.truthTable} style={{ height: isClose ? "55px" : "360px" }}>
-            <h2 onClick={
-                (e) => {
-                    setIsClose(!isClose);
-                }
-            }>{isClose ? "Show Truth Table" : "Truth Table"}</h2>
+        <div className={styles.truthTable} > 
+            <h2>TruthTable</h2>
             {truthTable}
 
         </div>

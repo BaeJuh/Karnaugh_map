@@ -1,5 +1,14 @@
 @import "_settings";
+@import "_responsive";
 
 .formulaArea {
-    
+    display: block;
 }
+
+// @include mobile {
+//     .formulaArea {
+//         h1 {
+//             margin-bottom: 100px;
+//         }
+//     }
+// }

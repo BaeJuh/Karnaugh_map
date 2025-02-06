@@ -1,19 +1,31 @@
 @import "_settings";
 @import "_responsive";
 
+.bigBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    // overflow: hidden;
+    @include noScroll;
+    padding: 20px 0 0 0;
+    position: relative;
+}
 .cellArea {
+    top: 0;
+    left: 0;
     $cellSize: 80px;
     $tagSize: 50px;
     // height: 100%;
-    @include noScroll;
+    // @include noScroll;
 
     margin: -$tagSize 0 0 0;
 
     @mixin setting {
         display: inline-block;
         text-align: center;
-        margin: 5px;
         line-height: $cellSize;
+        margin: 5px;
     }
 
     .variable {
@@ -101,15 +113,40 @@
 }
 
 @include mobile {
+    .bigBox {
+        width: 100vw;
+        height: 45%;
+        // overflow: scroll;
+        @include noScroll;
+        display: block;
+    }
     .cellArea {
         margin: auto;
-        min-width: 0;
-        height: 43% !important;
-        // width: 100%;
         border-top: 2px solid rgba(255, 255, 255, 0.7);
         padding: 0 0 20px 0;
         margin: auto;
         margin-bottom: 20px;
-        overflow: scroll;
+    }
+    
+    $mobileSize: 40px;
+    $tagSize: 50px;
+
+    .colTag {
+        width: $mobileSize !important;
+        height:$tagSize;
+    }
+    
+    .rowTag {
+        width: $tagSize;
+        height: $mobileSize !important;
+
+        line-height: $mobileSize !important;
+    }
+    .cell {
+        width: $mobileSize !important;
+        height: $mobileSize !important;
+        // box-shadow: none !important;
+        line-height: $mobileSize !important;
+        // margin: 2px 3px !important;
     }
 }

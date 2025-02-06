@@ -7,10 +7,16 @@ import { Cell } from "../modules/process.mjs";
 const CellTable = (props) => {
     const { variables, cells: [cells, setCells] } = props;
     const cellSize = 90;
+    const mobileSize = 50;
     const tagSize = 60;
     const [[variableTag, rowTag, colTag], setRowColTag] = useState([]); // JSX
     const [[row, col], setRowCol] = useState([0, 0]); // for dynamic display
     const [cellBox, setCellBox] = useState(null); // JSX
+
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
+    useEffect(() => {
+        setIsMobile(window.innerWidth <= 500);
+    }, []);
 
     useEffect(() => {
         if (variables.length !== 0) {
@@ -62,28 +68,29 @@ const CellTable = (props) => {
             setCellBox(cells.map((rowCell) => {
                 return rowCell.map((cell) => {
                     return (
-                        <div key={cell.id} className={styles.cell} style={cell.status ? { backgroundColor: "#ff7247" } : null}
+                        <div key={cell.id} className={styles.cell} style={cell.status ? {backgroundColor:  "#ff7247" } : null }
                             onClick={(e) => {
                                 cell.changeStatus();
                                 setCells([...cells]);
-                            }}>
-                            {`${cell.value.join(" ")}`}
-                        </div>);
+                            }}>&nbsp;
+                        </div>
+                    );
                 });
             }));
         }
     }, [cells]);
 
     return (
-        <div className={styles.cellArea} style={{ minWidth: `${(col * cellSize) + tagSize}px`, width: `${(col * cellSize) + tagSize}px`, height: row > 4 ? "100%" : `${(row * cellSize) + tagSize}px` }}>
-            {variableTag}
-            <div className={styles.colTags}>{colTag}</div>
-            <div className={styles.rowTags} style={{ width: `${tagSize}px` }}>{rowTag}</div>
-            <div className={styles.cellTable} style={{ width: `${(col * cellSize)}px` }}>
-                {cellBox}
+        <div className={styles.bigBox}>
+            <div className={styles.cellArea} style={{ minWidth: `${(col * (isMobile ? mobileSize : cellSize)) + tagSize}px`, width: `${(col * (isMobile ? mobileSize : cellSize)) + tagSize}px`, height: row > 4 ? "100%" : `${(row * (isMobile ? mobileSize : cellSize)) + tagSize}px` }}>
+                {variableTag}
+                <div className={styles.colTags}>{colTag}</div>
+                <div className={styles.rowTags} style={{ width: `${tagSize}px` }}>{rowTag}</div>
+                <div className={styles.cellTable} style={{ width: `${(col * (isMobile ? mobileSize : cellSize))}px`}}>
+                    {cellBox}
+                </div>
             </div>
         </div>
-
     );
 }
 

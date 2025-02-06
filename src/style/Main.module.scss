@@ -10,15 +10,17 @@
 
     background: rgba(0, 76, 72, 0.78);
     border-radius: 5px;
-    box-shadow: 6px 6px 10px rgb(20, 20, 20);
+    box-shadow: 6px 6px 8px rgb(20, 20, 20);
     backdrop-filter: blur(4.4px);
     -webkit-backdrop-filter: blur(4.4px);
 
     position: absolute;
     @include goToCenter;
 
-    overflow: scroll;
+    
     @include noScroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     .title {
         width: 100%;
         height: 40px;
@@ -49,11 +51,6 @@
                     size: 20px;
                     weight: 900; 
                 }
-        
-                // &:hover {
-                //     color: $neon;
-                //     text-decoration: underline;
-                // }
             }
             .decoButton {
             width: 26px;
@@ -62,6 +59,7 @@
             border: none;
 
             margin: 0 5px;
+            box-shadow: 2px 2px 1px rgb(20, 20, 20);
 
             background-color: tomato;
             color: $font-color;
@@ -112,7 +110,9 @@
 @include mobile {
     .wrapper {
         width: 100vw;
-        height: 100vh;
+        height: 100%;
+
+        box-shadow: none;
     }
 
     .title {
