@@ -7,13 +7,13 @@
 
     display: flex;
     align-items: center;
-    flex-direction: column;
+    // flex-direction: column;
     justify-content: space-around;
-    // @include noScroll;
+    @include noScroll;
 
     .tableArea {
         width: 100%;
-        height: 460px;
+        height: 100%;
         margin: -40px;
         display: flex;
         flex-direction: row;
@@ -21,6 +21,14 @@
         justify-content: space-around;
 
         position: relative;
+    }
+
+    .controlArea {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
     }
 }
 
@@ -74,8 +82,7 @@
                 margin: 0 5%;
             }
             p {
-                width: 90%;
-                text-align: right;
+                text-align: center;
             }
         }
     }

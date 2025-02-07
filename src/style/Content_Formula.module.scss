@@ -41,8 +41,6 @@
     justify-content: center;
     align-items: center;
 
-
-
     .popupContent {
         $titleHeight: 40px;
         width: 500px;
@@ -67,15 +65,27 @@
             line-height: $titleHeight;
             width: 100%;
             background-color: $backgroundColor;
-            padding-left: 10px;
+            padding: 0 10px;
             border-radius: 5px 5px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             h2 {
-                    font: {
-                        size: 25px;
-                        weight: 700;
-                        text-align: center;
-                    }
+                font: {
+                    size: 25px;
+                    weight: 700;
+                    text-align: center;
                 }
+            }
+            .decoButton {
+                @include decoButton;
+                .closeButton {
+                    position: absolute;
+                    top: -1px;
+                    left: -1px;
+                }
+            }
+
         }
         p {
             width: 100%;
@@ -107,10 +117,18 @@
         }
     }
 
+    .popupArea {
+        height: calc( 100vh );
+        padding-bottom: 80px;
+    }
+
     .popupContent {
         width: 100vw;
         min-height: 20vh;
         border-radius: 0 !important;
+        h2 {
+            text-align: left;
+        }
 
         p {
             text-align: left;

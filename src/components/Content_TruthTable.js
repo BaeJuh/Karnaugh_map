@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "../style/Content_TruthTable.module.scss";
 
+import { FaCaretUp, FaCaretDown } from "react-icons/fa";
+
 const TruthTable = (props) => {
     const { cells, variables, isMobile } = props;
     const [truthTable, setTruthTable] = useState(null);
@@ -28,8 +30,16 @@ const TruthTable = (props) => {
 
     // style={{ height: isClose ? "55px" : "90%" }}
     return (
-        <div className={styles.truthTable} style={ isMobile ? { height: isClose ? "50px" : "200px" } : null }>
-            <h2 onClick={isMobile ? e => {setIsClose(!isClose)} : null}>Truth Table</h2>
+        <div className={styles.truthTable} style={isMobile ? { height: isClose ? "50px" : "200px" } : null}>
+            <div className={styles.truthTableTitle} onClick={isMobile ? e => { setIsClose(!isClose) } : null}>
+                <h2>
+                    Truth Table
+                </h2>
+                {isMobile ? <div>
+                    {isClose ? <FaCaretDown size="32" /> : <FaCaretUp size="32" />}
+                </div> : null}
+            </div>
+
             {truthTable}
         </div>
     );

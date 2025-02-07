@@ -3,7 +3,8 @@
 
 .wrapper {
     width: 90%;
-    height: 85%;
+    height: 90%;
+    // height: 780px;
     min-height: 600px;
     
     color: $font-color;
@@ -53,17 +54,7 @@
                 }
             }
             .decoButton {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            border: none;
-
-            margin: 0 5px;
-            box-shadow: 2px 2px 1px rgb(20, 20, 20);
-
-            background-color: tomato;
-            color: $font-color;
-            position: relative;
+                @include decoButton;
                 .iconStyle {
                     position: absolute;
                     @include goToCenter;
@@ -117,6 +108,7 @@
 
     .title {
         // display: none !important;
+        margin-bottom: 10px;
         .buttons {
             // width: 100%;
             width: 30%;

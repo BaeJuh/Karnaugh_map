@@ -3,6 +3,8 @@ import styles from "../style/Content_Formula.module.scss";
 
 import { KarnaughMap } from "../modules/process.mjs";
 
+import { IoCloseSharp } from "react-icons/io5";
+
 const Formula = (props) => {
     const { cells, variables } = props;
     const [formula, setFormula] = useState("");
@@ -41,6 +43,9 @@ const Formula = (props) => {
                 <div className={styles.popupContent}>
                     <div className={styles.popupTitle} >
                         <h2>논리식</h2>
+                        <button className={styles.decoButton}>
+                            <IoCloseSharp className={styles.closeButton} size="28" />
+                        </button>
                     </div>
                     <p>{formula ? formula : "FALSE"}</p>
                 </div>

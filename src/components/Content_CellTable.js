@@ -6,7 +6,7 @@ import { Cell } from "../modules/process.mjs";
 
 const CellTable = (props) => {
     const { variables, cells: [cells, setCells], isMobile } = props;
-    const cellSize = 90;
+    const cellSize = 80;
     const mobileSize = 45;
     const tagSize = 60;
     const [[variableTag, rowTag, colTag], setRowColTag] = useState([]); // JSX
@@ -76,7 +76,7 @@ const CellTable = (props) => {
     }, [cells]);
 
     return (
-        <div className={styles.bigBox} style={{ height: row > 4 ? (isMobile ? "65%" : "100%") : `${(row * (isMobile ? mobileSize : cellSize)) + tagSize}px` }}>
+        <div className={styles.bigBox}>
             <div className={styles.cellArea} style={{ minWidth: `${(col * (isMobile ? mobileSize : cellSize)) + (isMobile ? tagSize - 10 : tagSize)}px`, width: `${(col * (isMobile ? mobileSize : cellSize)) + (isMobile ? tagSize - 10 : tagSize)}px`, height: row > 4 ? "100%" : `${(row * (isMobile ? mobileSize : cellSize)) + tagSize}px` }}>
                 {variableTag}
                 <div className={styles.colTags}>{colTag}</div>

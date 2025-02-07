@@ -20,3 +20,17 @@ $T: #ff7247;
     -ms-overflow-style: none;
     scrollbar-width: none ;
 }
+
+@mixin decoButton {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: none;
+
+    margin: 0 5px;
+    box-shadow: 2px 2px 1px rgb(20, 20, 20);
+
+    background-color: tomato;
+    color: $font-color;
+    position: relative;
+}
