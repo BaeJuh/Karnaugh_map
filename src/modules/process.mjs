@@ -213,7 +213,7 @@ class KarnaughMap extends FourWayLinkedList {
         return this.setResultBundles();
     }
 
-    printAllId(nodes) { // test하려 만든 노드
+    printAllId(nodes) { // test하려 만든 메서드
         let rowStartNode = this.startNode;
         nodes.forEach((_, row_i) => {
             let currentNode = rowStartNode;
