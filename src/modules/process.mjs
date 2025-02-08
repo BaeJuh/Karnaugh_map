@@ -1,4 +1,4 @@
-class TwoWayLinkedList {
+class FourWayLinkedList {
     constructor(id) {
         this.id = id;
         this._startNode = null;
@@ -70,7 +70,7 @@ class Node {
     set value(data) { this._value = data; }
 }
 
-class KarnaughMap extends TwoWayLinkedList {
+class KarnaughMap extends FourWayLinkedList {
     constructor(id) {
         super(id);
 
