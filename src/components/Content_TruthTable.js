@@ -22,10 +22,8 @@ const TruthTable = (props) => {
                     );
                 })]];
             }, []);
-
             setTruthTable(truthTableJSX);
         }
-
     }, [cells]);
 
     // style={{ height: isClose ? "55px" : "90%" }}

@@ -1,7 +1,6 @@
 const getVariables = (inputText) => {
     return inputText.split(",")
-        .filter(variable => variable.trim())
-        .map(variable => variable.trim());
+        .filter(variable => variable.trim());
 }
 
 const boolShuffler = (stopLength = 0) => {
