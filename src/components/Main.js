@@ -65,7 +65,7 @@ const Main = () => {
                     <section className={`${styles.decoButton} ${styles.pdf}`}>
                         <a className={styles.viewPDF}
                             title="문서 보러 가기"
-                            href="/" target="_blank">
+                            href="http://kkms4001.iptime.org/~c21st11/Portfolio/karnaugh_map/%eb%b0%b0%ec%a3%bc%ed%99%98_%ed%8f%ac%ed%8a%b8%ed%8f%b4%eb%a6%ac%ec%98%a4_%ec%b9%b4%eb%a5%b4%eb%85%b8%eb%a7%b5.pdf" target="_blank">
                             <TbPdf size="22" className={styles.iconStyle} />
                             {/* View Document */}
                         </a>
