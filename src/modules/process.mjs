@@ -1,4 +1,4 @@
-class TwoWayLinkedList {
+class FourWayLinkedList {
     constructor(id) {
         this.id = id;
         this._startNode = null;
@@ -70,10 +70,9 @@ class Node {
     set value(data) { this._value = data; }
 }
 
-class KarnaughMap extends TwoWayLinkedList {
+class KarnaughMap extends FourWayLinkedList {
     constructor(id) {
         super(id);
-        this.resultBundles = []; // [][]
 
         this.row = 0;
         this.col = 0;
@@ -88,13 +87,13 @@ class KarnaughMap extends TwoWayLinkedList {
                 if (this.startNode === null) { // 아무것도 없을 때 설정
                     this.startNode = currentNode;
                 }
-                if (prevNode) { // 행 연결
+                if (prevNode) { // 가로 연결
                     super.connectHorizontally(prevNode, currentNode);
                     if ((rowNode.length - 1) === col_i && currentNode.right === null && super.searchNode(`cell_${row_i}_${0}`).left === null) { // 행의 마지막 노드 일때
                         super.connectHorizontally(currentNode, super.searchNode(`cell_${row_i}_${0}`));
                     }
                 }
-                if (row_i > 0) { // 열 연결
+                if (row_i > 0) { // 세로 연결
                     super.connectVertically(super.searchNode(`cell_${row_i - 1}_${col_i}`), currentNode);
                     if ((nodes.length - 1) === row_i) { // 마지막 행의 노드 일때
                         super.connectVertically(currentNode, super.searchNode(`cell_${0}_${col_i}`));
@@ -214,7 +213,7 @@ class KarnaughMap extends TwoWayLinkedList {
         return this.setResultBundles();
     }
 
-    printAllId(nodes) { // test하려 만든 노드
+    printAllId(nodes) { // test하려 만든 메서드
         let rowStartNode = this.startNode;
         nodes.forEach((_, row_i) => {
             let currentNode = rowStartNode;
@@ -232,13 +231,9 @@ class Cell extends Node {
         super(id);
 
         this._status = false;
-        this._groups = [];
     }
     changeStatus() { this._status = !this._status; }
     get status() { return this._status; }
-
-    set groups(group) { this._groups = group; }
-    get groups() { return this._groups; }
 }
 
 export { Cell, KarnaughMap };
